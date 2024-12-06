@@ -1,11 +1,16 @@
 Package: posteriors3
 Type: Package
-Title: Simple Bayesian Analyses using S3 Probability Distribution Objects
+Title: Univariate Bayesian Analyses using S3 Probability Distribution Objects
 Version: 1.0.0
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
   role = c("aut", "cre", "cph"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Provides functions to perform univariate Bayesian analyses using
+    the S3 probability distribution objects provided by the 'distributions3' 
+    package <doi:10.32614/CRAN.package.distributions3>. A multiplication 
+    generic function is provided so that a posterior distribution object can be 
+    created from a product of a likelihood object and a prior distribution 
+    object. If a conjugate prior is used then the posterior distribution object
+    is also an S3 probability distribution object. 
 Imports: distributions3,
     stats
 License: GPL (>= 3)
