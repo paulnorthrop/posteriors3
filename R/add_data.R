@@ -24,7 +24,12 @@
 #' @return An object with the same class as the input `d`, that is, inheriting
 #'   from class `"distribution"`.
 #'
+#' @seealso [`posterior`] for performing Bayesian inference using
+#'   `"distribution"` objects.
+#'
 #' @examples
+#' library(distributions3)
+#'
 #' # Note: the value of p is irrelevant
 #' x <- Binomial(size = 10)
 #' x <- add_data(x, 1:3)

@@ -13,14 +13,21 @@
 #'   attribute, added using [`add_data()`].
 #' @param y To specify the **prior** distribution. A probability distribution
 #'   object inheriting from class `"distribution"`.
+#'
 #' @details Repeat the explanation in `add_data` concerning the data being in
 #'   the support of `x`. Explain conjugacy and give an example (Binomial-Beta).
 #'   If prior is conjugate then ... distribution object: same distribution type
 #'   as the prior distribution in `y`.
 #'   If not then ... Sample from posterior.
+#'
 #' @returns A probability distribution object with the same class as the prior
 #'   distribution object `y`.
+#'
+#' @seealso [`add_data()`] for adding data to a `"distribution"` object.
+#'
 #' @examples
+#' library(distributions3)
+#'
 #' # Note: the value of p is irrelevant
 #' x <- Binomial(size = 10)
 #' x <- add_data(x, 1:3)
@@ -54,14 +61,6 @@ NULL
   if (is.null(attr(x, "data"))) {
     stop("x must have a data attribute, added using add_data()")
   }
-  # Make the data into a list?
-
-
-  # Check that the data are in the support of x
-  the_support <- distributions3::support(x)
-
-
-
   # Call the relevant S3 posterior method based on data distribution, that is,
   # class(x)[1], passing the prior distribution y
   z <- posterior(x, y)

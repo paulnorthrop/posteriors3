@@ -14,16 +14,13 @@ Details
 \references{
 Hayes A, Moller-Trane R, Jordan D, Northrop P, Lang M, Zeileis A
 (2024). distributions3: Probability Distributions as S3 Objects. R package
-version 0.2.2, \doi{10.32614/CRAN.package.posteriors3}
+version 0.2.2, \doi{10.32614/CRAN.package.distributions3}
 }
 \seealso{
-Useful links:
-\itemize{
-  \item \url{https://paulnorthrop.github.io/posteriors3/}
-  \item \url{https://github.com/paulnorthrop/posteriors3}
-  \item Report bugs at \url{https://github.com/paulnorthrop/posteriors3/issues}
-}
+\code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
 
+\code{\link{posterior}} for performing Bayesian inference using
+\code{"distribution"} objects.
 }
 \author{
 \strong{Maintainer}: Paul J. Northrop \email{p.northrop@ucl.ac.uk} [copyright holder]

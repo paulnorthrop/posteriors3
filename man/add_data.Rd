@@ -30,6 +30,8 @@ Additional details... Explain that all the data must be in the
 support of distribution \code{d}.
 }
 \examples{
+library(distributions3)
+
 # Note: the value of p is irrelevant
 x <- Binomial(size = 10)
 x <- add_data(x, 1:3)
@@ -44,4 +46,8 @@ y <- Beta(alpha = 1, beta = 1)
 z <- x * y
 z
 
+}
+\seealso{
+\code{\link{posterior}} for performing Bayesian inference using
+\code{"distribution"} objects.
 }

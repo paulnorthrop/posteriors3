@@ -1,6 +1,9 @@
 #' @export
 #' @rdname posterior
 posterior.Binomial <- function(x, y) {
+  # Check that the data are in the support of x
+  the_support <- distributions3::support(x)
+
   # Extract the name of the prior distribution
   prior_distribution <- class(y)[1]
   # If prior is conjugate then infer the posterior distribution

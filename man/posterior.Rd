@@ -41,6 +41,8 @@ as the prior distribution in \code{y}.
 If not then ... Sample from posterior.
 }
 \examples{
+library(distributions3)
+
 # Note: the value of p is irrelevant
 x <- Binomial(size = 10)
 x <- add_data(x, 1:3)
@@ -57,4 +59,7 @@ x <- add_data(x, data)
 y <- Beta(alpha = 2, beta = 2)
 z <- x * y
 z
+}
+\seealso{
+\code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
 }
