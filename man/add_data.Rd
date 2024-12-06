@@ -12,7 +12,7 @@ to \code{\link[distributions3:Normal]{Normal()}} or
 \code{\link[distributions3:Binomial]{Binomial()}} etc.}
 
 \item{data}{A numeric vector, matrix, data frame or list providing a numeric
-vector of data for each of the \code{length(d)} distinct variable in \code{d}.
+vector of data for each of the \code{length(d)} distinct variables in \code{d}.
 \code{data} may be a matrix with \code{length(d)} columns, a data frame with
 \code{length(d)} variables or a list of length \code{length(d)}. A matrix or data
 frame may contain \code{NA} values. Only if \code{length(d) = 1} may \code{data} be a
@@ -20,31 +20,49 @@ numeric vector.}
 }
 \value{
 An object with the same class as the input \code{d}, that is, inheriting
-from class \code{"distribution"}.
+from class \code{"distribution"}, but with the extra attribute \code{"data"}.
 }
 \description{
-Describe
+Add data as an attribute \code{"data"} to a probability distribution object,
+inheriting from class \code{"distribution"}.
 }
 \details{
-Additional details... Explain that all the data must be in the
-support of distribution \code{d}.
+All observations in the data must be in the support of the
+probability distribution \code{d}. See \code{\link[distributions3:support]{support()}}.
+If necessary, the input \code{data} is converted to a list of length
+\code{length(d)} before assigning it to \code{attr(d, "data")}, for later use by
+\code{\link{posterior}}.
 }
 \examples{
 library(distributions3)
 
-# Note: the value of p is irrelevant
-x <- Binomial(size = 10)
-x <- add_data(x, 1:3)
-y <- Beta(alpha = 1, beta = 1)
-z <- x * y
-z
+## One Binomial distribution, with size 10
+## Note: the argument p is irrelevant
 
-x <- Binomial(size = c(5, 10))
+distribution <- Binomial(size = 10)
+# Add the data, a numeric vector c(1, 2, 3)
+likelihood <- add_data(distribution, 1:3)
+likelihood
+attr(likelihood, "data")
+
+## Two Binomial distributions, with sizes 5 and 10
+
+distributions <- Binomial(size = c(5, 10))
+
+# Below are three equivalent ways to supply the data
+#   1,2 for the first Binomial distribution, and
+#   1, 2, 3 for the second Binomial distribution
+
+# data is a list of length 2: one numeric vector per Binomial distribution
 data <- list(1:2, 1:3)
-x <- add_data(x, data)
-y <- Beta(alpha = 1, beta = 1)
-z <- x * y
-z
+# data is a data frame with 2 variables: one per Binomial distribution
+data <- data.frame(data1 = c(1:2, NA), data2 = 1:3)
+# data is a matrix with 2 columns: one per Binomial distribution
+data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
+
+likelihood <- add_data(distributions, data)
+likelihood
+attr(likelihood, "data")
 
 }
 \seealso{
