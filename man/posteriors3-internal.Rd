@@ -3,12 +3,12 @@
 \name{posteriors3-internal}
 \alias{posteriors3-internal}
 \alias{check_data}
-\alias{check_support}
+\alias{is.wholenumber}
 \title{Internal posteriors3 functions}
 \usage{
 check_data(x)
 
-check_support(x)
+is.wholenumber(x, tol = .Machine$double.eps^0.5)
 }
 \description{
 Internal posteriors3 functions
