@@ -7,7 +7,6 @@ Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 Imports: distributions3,
-    rlang,
     stats
 License: GPL (>= 3)
 Encoding: UTF-8
