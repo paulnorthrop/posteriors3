@@ -1,4 +1,4 @@
-#' posteriors3: Simple Bayesian Analyses using S3 Probability Distribution Objects
+#' posteriors3: Univariate Bayesian Analyses using S3 Probability Distribution Objects
 #'
 #' Describe
 #'
