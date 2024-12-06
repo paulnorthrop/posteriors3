@@ -1,6 +1,10 @@
 #' @export
 #' @rdname posterior
 posterior.Binomial <- function(x, y) {
+  # Check that the likelihood object x has data as an attribute
+  if (is.null(attr(x, "data"))) {
+    stop("'x' must have a data attribute, added using add_data()")
+  }
   # Check that the data are in the support of x
   the_support <- distributions3::support(x)
 
