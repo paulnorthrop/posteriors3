@@ -16,8 +16,8 @@ posterior(x, y)
 \item{x}{To specify the \strong{likelihood}. A probability distribution object
 inheriting from class \code{"distribution"} such as those created by a call to
 \code{\link[distributions3:Normal]{Normal()}} or
-\code{\link[distributions3:Binomial]{Binomial()}} etc. \code{x} must have a data
-attribute, added using \code{\link[=add_data]{add_data()}}.}
+\code{\link[distributions3:Binomial]{Binomial()}} etc. \code{x} must have an extra
+attribute \code{"data"}, added using \code{\link[=add_data]{add_data()}}.}
 
 \item{y}{To specify the \strong{prior} distribution. A probability distribution
 object inheriting from class \code{"distribution"}.}
@@ -30,8 +30,9 @@ distribution object \code{y}.
 Generic functions for performing Bayesian inference using \code{"distribution"}
 objects. After using \code{\link[=add_data]{add_data()}} to add a random sample of data to a
 distribution object \code{x} the generic multiplication \verb{*.distribution}
-multiplies the likelihood by the prior distribution specified in \code{y} to
-create a posterior distribution.
+multiplies the implied likelihood in \code{x} by the prior distribution specified
+in \code{y} to create a posterior distribution. \code{posterior(x, y)} will give the
+same output.
 }
 \details{
 Repeat the explanation in \code{add_data} concerning the data being in
@@ -43,22 +44,40 @@ If not then ... Sample from posterior.
 \examples{
 library(distributions3)
 
-# Note: the value of p is irrelevant
-x <- Binomial(size = 10)
-x <- add_data(x, 1:3)
-# Using a conjugate prior distribution
-y <- Beta(alpha = 1, beta = 1)
-z <- x * y
-z
+## One Binomial distribution, with size 10
+## Note: the argument p is irrelevant
 
-# Two binomial distributions
-x <- Binomial(size = c(5, 10))
-# Two vectors of data
+distribution <- Binomial(size = 10)
+
+# Add the data, a numeric vector c(1, 2, 3)
+likelihood <- add_data(distribution, 1:3)
+
+# Set a conjugate prior distribution
+prior <- Beta(alpha = 1, beta = 1)
+# Determine the posterior distribution
+posterior <- likelihood * prior
+posterior
+
+## Two Binomial distributions, with sizes 5 and 10
+
+distributions <- Binomial(size = c(5, 10))
+
+# Below are three equivalent ways to supply the data
+#   1,2 for the first Binomial distribution, and
+#   1, 2, 3 for the second Binomial distribution
+
+# data is a list of length 2: one numeric vector per Binomial distribution
 data <- list(1:2, 1:3)
-x <- add_data(x, data)
-y <- Beta(alpha = 2, beta = 2)
-z <- x * y
-z
+# data is a data frame with 2 variables: one per Binomial distribution
+data <- data.frame(data1 = c(1:2, NA), data2 = 1:3)
+# data is a matrix with 2 columns: one per Binomial distribution
+data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
+
+likelihood <- add_data(distributions, data)
+prior <- Beta(alpha = 1.5, beta = 2.1)
+posterior <- likelihood * prior
+posterior
+
 }
 \seealso{
 \code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
