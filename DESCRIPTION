@@ -1,0 +1,22 @@
+Package: posteriors3
+Type: Package
+Title: Simple Bayesian Analyses using S3 Probability Distribution Objects
+Version: 1.0.0
+Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
+  role = c("aut", "cre", "cph"))
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+Imports: distributions3,
+    rlang,
+    stats
+License: GPL (>= 3)
+Encoding: UTF-8
+Depends:
+    R (>= 3.3.0)
+Suggests: 
+    testthat (>= 3.0.0)
+URL: https://paulnorthrop.github.io/posteriors3/, https://github.com/paulnorthrop/posteriors3
+BugReports: https://github.com/paulnorthrop/posteriors3/issues
+Config/testthat/edition: 3
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
