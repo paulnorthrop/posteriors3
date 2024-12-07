@@ -62,7 +62,7 @@ posterior
 ```
 
 This agrees with the result that the posterior is a
-Beta($\alpha + \sum_{i=1}^n x_i, \beta + \sum_{i=1}^n (5 - x_i)$)
+Beta$(\alpha + \sum_{i=1}^n x_i, \beta + \sum_{i=1}^n (5 - x_i))$
 distribution, where here $\alpha = \beta = 1/2$,
 $(x_1, ..., x_{10}) = (1,0,2,0,0,0,1,0,1,0)$.
 
