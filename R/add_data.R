@@ -31,15 +31,15 @@
 #' ## One Binomial distribution, with size 10
 #' ## Note: the argument p is irrelevant
 #'
-#' distribution <- Binomial(size = 10)
+#' N <- Binomial(size = 10)
 #' # Add the data, a numeric vector c(1, 2, 3)
-#' likelihood <- add_data(distribution, 1:3)
+#' likelihood <- add_data(N, 1:3)
 #' likelihood
 #' attr(likelihood, "data")
 #'
 #' ## Two Binomial distributions, with sizes 5 and 10
 #'
-#' distributions <- Binomial(size = c(5, 10))
+#' M <- Binomial(size = c(5, 10))
 #'
 #' # Below are three equivalent ways to supply the data
 #' #   1,2 for the first Binomial distribution, and
@@ -52,7 +52,7 @@
 #' # data is a matrix with 2 columns: one per Binomial distribution
 #' data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
 #'
-#' likelihood <- add_data(distributions, data)
+#' likelihood <- add_data(M, data)
 #' likelihood
 #' attr(likelihood, "data")
 #'
