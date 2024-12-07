@@ -61,9 +61,9 @@ posterior
 #> [1] "Beta(alpha = 5.5, beta = 45.5)"
 ```
 
-This agrees with the result that the posterior is a
-Beta$(\alpha + \sum_{i=1}^n x_i, \beta + \sum_{i=1}^n (5 - x_i))$
-distribution, where here $\alpha = \beta = 1/2$,
+This agrees with the result that the posterior is a Beta distribution
+with parameters $\alpha + \sum_{i=1}^n x_i$ and
+$\beta + \sum_{i=1}^n (5 - x_i)$, where here $\alpha = \beta = 1/2$ and
 $(x_1, ..., x_{10}) = (1,0,2,0,0,0,1,0,1,0)$.
 
 ## Installation
