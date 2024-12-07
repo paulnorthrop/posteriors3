@@ -63,16 +63,16 @@ add_data <- function(d, data) {
   # Check that the data have the correct dimension(s) and make them a list
   if (inherits(data, "data.frame")) {
     if (ncol(data) != nvars) {
-      stop(paste0("'data' must have length(d) = ", nvars, " columns"))
+      stop("a 'data' data frame must have length(d) = ", nvars, " variables")
     }
     data <- as.list(data)
   } else if (inherits(data, "list")) {
     if (length(data) != nvars) {
-      stop(paste0("'data' must have length ", nvars))
+      stop("a 'data' list must have length ", nvars)
     }
   } else if (inherits(data, "matrix")) {
     if (ncol(data) != nvars) {
-      stop(paste0("'data' must have length(d) = ", nvars, " columns"))
+      stop("a 'data' matrix must have length(d) = ", nvars, " columns")
     }
     data <- as.list(as.data.frame(data))
   } else if (is.numeric(data)) {
