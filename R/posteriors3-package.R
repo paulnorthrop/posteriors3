@@ -5,8 +5,8 @@
 #' @details Details
 #'
 #' @seealso [`add_data()`] for adding data to a `"distribution"` object.
-#' @seealso [`posterior`] for performing Bayesian inference using
-#'   `"distribution"` objects.
+#' @seealso [`Bayesian`] for calculating products of functions for Bayesian
+#'   Inference using `"distribution"` objects.
 #'
 #' @references Hayes A, Moller-Trane R, Jordan D, Northrop P, Lang M, Zeileis A
 #'   (2024). distributions3: Probability Distributions as S3 Objects. R package
