@@ -37,7 +37,9 @@ set.seed(7122024)
 ```{r, message = FALSE, warning = FALSE}
 library(distributions3)
 library(posteriors3)
+```
 
+```{r}
 # Create a Binomial(5, 0.2) distribution object
 N <- Binomial(size = 5, 0.2)
 N

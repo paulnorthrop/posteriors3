@@ -34,7 +34,9 @@ the probability $p$.
 ``` r
 library(distributions3)
 library(posteriors3)
+```
 
+``` r
 # Create a Binomial(5, 0.2) distribution object
 N <- Binomial(size = 5, 0.2)
 N
@@ -48,6 +50,7 @@ data
 # Add the data to the object N as an attribute "data"
 likelihood <- add_data(N, data)
 attr(likelihood, "data")
+#> [[1]]
 #>  [1] 1 0 2 0 0 0 1 0 1 0
 
 # Set a conjugate (Jeffreys) prior distribution
@@ -57,6 +60,7 @@ prior
 
 # The posterior distribution is proportional to likelihood * prior
 posterior <- likelihood * prior
+#> Posterior: Binomial likelihood, Beta prior
 posterior
 #> [1] "Beta(alpha = 5.5, beta = 45.5)"
 ```
