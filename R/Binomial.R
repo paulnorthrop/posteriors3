@@ -1,5 +1,5 @@
 #' @export
-#' @rdname posterior
+#' @rdname Bayesian
 posterior.Binomial <- function(x, y) {
   # Check that the likelihood object x has appropriate data as an attribute
   check_data(x)
