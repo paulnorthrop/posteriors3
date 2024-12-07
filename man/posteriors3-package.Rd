@@ -4,7 +4,7 @@
 \name{posteriors3-package}
 \alias{posteriors3}
 \alias{posteriors3-package}
-\title{posteriors3: Simple Bayesian Analyses using S3 Probability Distribution Objects}
+\title{posteriors3: Univariate Bayesian Analyses using S3 Probability Distribution Objects}
 \description{
 Describe
 }
