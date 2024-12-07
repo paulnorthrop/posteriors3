@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_data.R
 \name{add_data}
 \alias{add_data}
-\title{Add data to a probability distribution object}
+\title{Add Data to a Probability Distribution Object}
 \usage{
 add_data(d, data)
 }
@@ -66,6 +66,6 @@ attr(likelihood, "data")
 
 }
 \seealso{
-\code{\link{posterior}} for performing Bayesian inference using
-\code{"distribution"} objects.
+\code{\link{Bayesian}} for calculating products of functions for Bayesian
+Inference using \code{"distribution"} objects.
 }

@@ -1,4 +1,4 @@
-#' Add data to a probability distribution object
+#' Add Data to a Probability Distribution Object
 #'
 #' Add data as an attribute `"data"` to a probability distribution object,
 #'   inheriting from class `"distribution"`.
@@ -22,8 +22,8 @@
 #' @return An object with the same class as the input `d`, that is, inheriting
 #'   from class `"distribution"`, but with the extra attribute `"data"`.
 #'
-#' @seealso [`posterior`] for performing Bayesian inference using
-#'   `"distribution"` objects.
+#' @seealso [`Bayesian`] for calculating products of functions for Bayesian
+#'   Inference using `"distribution"` objects.
 #'
 #' @examples
 #' library(distributions3)
