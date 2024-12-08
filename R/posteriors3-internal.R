@@ -20,8 +20,7 @@ check_data <- function(x) {
     stop("The attribute 'data' must be a list, created by add_data()")
   }
   if (length(data) != length(x)) {
-    stop(paste0("'data' must have length ", length(x),
-                "create is using add_data()"))
+    stop("'data' must have length ", length(x), "create it using add_data()")
   }
   # Check that all the data are in the support of the relevant random variable
   # Find the support of x
@@ -40,9 +39,13 @@ check_data <- function(x) {
   }
   valid <- mapply(check_support, data, mins, maxs)
   if (any(!valid)) {
-    stop(paste0("The data for variable number(s): ",
-                paste(which(!valid), collapse = ", "),
-                "; are outside their support"))
+    variable_numbers <- paste(sQuote(which(!valid)), collapse = ", ")
+    msg <- sprintf(ngettext(length(which(!valid)),
+                            "data for variable %s is outside its support",
+                            "data for variables %s are outside their supports",
+                            domain = "R-base"),
+                   variable_numbers)
+    stop(msg, domain = NA)
   }
   check_integer <- function(data, discrete) {
     return(any(!is.wholenumber(data) & discrete))
@@ -50,9 +53,13 @@ check_data <- function(x) {
   discrete <- distributions3::is_discrete(x)
   not_valid <- mapply(check_integer, data, discrete)
   if (any(not_valid)) {
-    stop(paste0("The data for variable number(s): ",
-                paste(which(not_valid), collapse = ", "),
-                "; are not all integers"))
+    variable_numbers <- paste(sQuote(which(not_valid)), collapse = ", ")
+    msg <- sprintf(ngettext(length(which(not_valid)),
+                            "data for variable %s are not all integers",
+                            "data for variables %s are not all integers",
+                            domain = "R-base"),
+                   variable_numbers)
+    stop(msg, domain = NA)
   }
   return(invisible(x))
 }
