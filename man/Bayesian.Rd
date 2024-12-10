@@ -81,6 +81,12 @@ prior <- Beta(alpha = 1, beta = 1)
 posterior <- likelihood * prior
 posterior
 
+# Compare two different prior distributions
+prior <- Beta(alpha = 1:2, beta = 1:2)
+# Determine the posterior distribution
+posterior <- likelihood * prior
+posterior
+
 ## Two Binomial distributions, with sizes 5 and 10
 
 M <- Binomial(size = c(5, 10))
