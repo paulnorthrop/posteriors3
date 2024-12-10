@@ -26,5 +26,6 @@ posterior.Binomial <- function(x, y) {
   }
   # Add the prior(s) as an attribute for later use
   attr(z, "prior") <- y
+  class(z) <- c(class(z)[1], "posterior", class(z)[2])
   return(z)
 }
