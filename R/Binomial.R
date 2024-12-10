@@ -26,6 +26,11 @@ posterior.Binomial <- function(x, y) {
   }
   # Add the prior(s) as an attribute for later use
   attr(z, "prior") <- y
+  # Add the likelihood as an attribute for later use
+  attr(z, "likelihood") <- x
+  # Store the name of the parameter of interest
+  attr(z, "parameter") <- "P"
+  # Add "posterior" as the second component of the class
   class(z) <- c(class(z)[1], "posterior", class(z)[2])
   return(z)
 }
