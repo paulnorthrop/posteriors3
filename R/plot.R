@@ -177,31 +177,17 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   } else {
     my_xlim <- user_args$xlim
   }
-  # Set x and y axis labels. If the variable name is a single upper case letter
-  # then use that name in the labels.  Otherwise, use the generic x and
-  # P(X = x) or f(x).
-  variable_name <- deparse(substitute(x))
-  if (length(variable_name) == 1 && nchar(variable_name) == 1 && toupper(variable_name) == variable_name) {
-    my_xlab <- tolower(substitute(x))
-    if (cdf) {
-      my_ylab <- paste0("F(", my_xlab, ")")
-    } else {
-      if (x_is_discrete) {
-        my_ylab <- paste0("P(", substitute(x), " = ", my_xlab, ")")
-      } else {
-        my_ylab <- paste0("f(", my_xlab, ")")
-      }
-    }
+  # Set x and y axis labels, based on the name of the parameter
+  # We include the discrete case, but this probably will not be used
+  variable_name <- attr(x, "parameter")
+  my_xlab <- variable_name
+  if (cdf) {
+    my_ylab <- paste0("F(", my_xlab, ")")
   } else {
-    my_xlab <- "x"
-    if (cdf) {
-      my_ylab <- "F(x)"
+    if (x_is_discrete) {
+      my_ylab <- paste0("P(", toupper(my_xlab), " = ", my_xlab, ")")
     } else {
-      if (x_is_discrete) {
-        my_ylab <- "P(X = x)"
-      } else {
-        my_ylab <- "f(x)"
-      }
+      my_ylab <- paste0("f(", my_xlab, ")")
     }
   }
   # Function to create the legend text
