@@ -89,7 +89,7 @@
 plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
                            all = FALSE, legend_args = list(), prior = TRUE,
                            ...) {
-  if (!is_distribution(x)) {
+  if (!distributions3::is_distribution(x)) {
     stop("use only with \"distribution\" objects")
   }
   # To add the prior distribution(s) extract them from attr(x, "prior")
@@ -194,7 +194,11 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     }
   } else {
     my_xlab <- "x"
-    my_ylab <- "P(X = x)"
+    if (x_is_discrete) {
+      my_ylab <- "P(X = x)"
+    } else {
+      my_ylab <- "f(x)"
+    }
   }
   # Function to create the legend text
   create_legend_text <- function(x, n_distns) {
@@ -210,7 +214,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
                                 ylab = my_ylab, lwd = 2, main = my_main,
                                 pch = 16, col = 1:n_distns) {
     col <- rep_len(col, n_distns)
-    yvals <- t(cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+    yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     rval <- stats::approxfun(xvals, yvals[, 1],
       method = "constant",
       yleft = 0, yright = 1, f = 0, ties = "ordered"
@@ -258,7 +262,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   discrete_pmf_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
                                 lwd = 2, main = my_main, pch = 16,
                                 col = 1:n_distns) {
-    yvals <- t(pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+    yvals <- t(distributions3::pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     graphics::matplot(xvals, yvals,
       type = "p", xlab = xlab, ylab = ylab,
       axes = FALSE, lwd = lwd, main = main, pch = pch,
@@ -283,14 +287,14 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
       do.call(graphics::legend, legend_args)
     }
   }
-  # Plot function for discrete distributions with defaults
+  # Plot function for continuous distributions with defaults
   continuous_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
                               lwd = 2, lty = 1, main = my_main,
                               col = 1:n_distns) {
     if (cdf) {
-      yvals <- t(cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+      yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     } else {
-      yvals <- t(pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+      yvals <- t(distributions3::pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     }
 
     graphics::matplot(xvals, yvals,
