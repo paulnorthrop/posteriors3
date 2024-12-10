@@ -67,7 +67,7 @@
 #' M <- Binomial(size = c(5, 10))
 #'
 #' # Below are three equivalent ways to supply the data
-#' #   1,2 for the first Binomial distribution, and
+#' #   1, 2 for the first Binomial distribution, and
 #' #   1, 2, 3 for the second Binomial distribution
 #'
 #' # data is a list of length 2: one numeric vector per Binomial distribution
