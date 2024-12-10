@@ -24,5 +24,7 @@ posterior.Binomial <- function(x, y) {
     # Return the Beta posterior as a "distribution" object
     z <- Beta(alpha = posterior_alpha, beta = posterior_beta)
   }
+  # Add the prior(s) as an attribute for later use
+  attr(z, "prior") <- y
   return(z)
 }
