@@ -194,10 +194,14 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     }
   } else {
     my_xlab <- "x"
-    if (x_is_discrete) {
-      my_ylab <- "P(X = x)"
+    if (cdf) {
+      my_ylab <- "F(x)"
     } else {
-      my_ylab <- "f(x)"
+      if (x_is_discrete) {
+        my_ylab <- "P(X = x)"
+      } else {
+        my_ylab <- "f(x)"
+      }
     }
   }
   # Function to create the legend text
