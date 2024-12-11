@@ -49,44 +49,59 @@
 #' library(distributions3)
 #'
 #' ## One Binomial distribution, with size 10
-#' ## Note: the argument p is irrelevant
 #'
-#' N <- Binomial(size = 10)
+#' # Note: the value of p is only used in the simulation of the example data
+#' N <- Binomial(size = 10, p = 0.2)
 #'
-#' # Add the data, a numeric vector c(1, 2, 3)
-#' likelihood <- add_data(N, 1:3)
+#' # Simulate a sample of size 5 from a Binomial(20, 0.2) distribution
+#' set.seed(3)
+#' data <- random(N, 5)
 #'
-#' # Set a conjugate prior distribution
+#' # Add the data, a numeric vector
+#' likelihood <- add_data(N, data)
+#'
+#' # Set a conjugate (uniform) prior distribution
 #' prior <- Beta(alpha = 1, beta = 1)
 #' # Determine the posterior distribution
 #' posterior <- likelihood * prior
 #' posterior
+#' plot(posterior)
 #'
-#' # Compare two different prior distributions
-#' prior <- Beta(alpha = 1:2, beta = 1:2)
+#' # Compare two different conjugate prior distributions
+#' prior <- Beta(alpha = c(1, 10), beta = c(1,10))
 #' # Determine the posterior distribution
 #' posterior <- likelihood * prior
 #' posterior
+#' plot(posterior)
 #'
 #' ## Two Binomial distributions, with sizes 5 and 10
 #'
-#' M <- Binomial(size = c(5, 10))
+#' # Note: the value of p is only used in the simulation of the example data
+#' M <- Binomial(size = c(5, 10), p = 0.8)
 #'
-#' # Below are three equivalent ways to supply the data
-#' #   1, 2 for the first Binomial distribution, and
-#' #   1, 2, 3 for the second Binomial distribution
+#' # Simulate samples of size 8 from
+#' #   a Binomial(5, 0.8) distribution, and
+#' #   a Binomial(10, 0.8) distribution
 #'
+#' set.seed(3)
+#' data <- random(M, 8)
+#' # data is a matrix with 2 rows: one per Binomial distribution
+#'
+#' # Below are two more equivalent ways to supply these data
+#'
+#' # Extract the individual samples
+#' data1 <- data[1, ]
+#' data2 <- data[2, ]
 #' # data is a list of length 2: one numeric vector per Binomial distribution
-#' data <- list(1:2, 1:3)
+#' data <- list(data1 = data1, data2 = data2)
 #' # data is a data frame with 2 variables: one per Binomial distribution
-#' data <- data.frame(data1 = c(1:2, NA), data2 = 1:3)
-#' # data is a matrix with 2 columns: one per Binomial distribution
-#' data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
+#' data <- data.frame(data1, data2)
 #'
 #' likelihood <- add_data(M, data)
 #' prior <- Beta(alpha = 1.5, beta = 2.1)
 #' posterior <- likelihood * prior
 #' posterior
+#' plot(posterior, legend_args = list(x = "topleft"))
 #'
 #' @name Bayesian
 NULL
