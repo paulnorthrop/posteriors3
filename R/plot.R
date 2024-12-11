@@ -1,94 +1,52 @@
-#' Plot the p.m.f, p.d.f or c.d.f. of a univariate distribution
+#' Plot posterior and prior distributions
 #'
-#' Plot method for an object inheriting from class \code{"distribution"}.
-#' By default the probability density function (p.d.f.), for a continuous
-#' variable, or the probability mass function (p.m.f.), for a discrete
-#' variable, is plotted.  The cumulative distribution function (c.d.f.)
-#' will be plotted if \code{cdf = TRUE}.  Multiple functions are included
-#' in the plot if any of the parameter vectors in \code{x} has length greater
-#' than 1.  See the argument \code{all}.
+#' Plot method for an object inheriting from class `"posterior"`.
+#' Plots the posterior and corresponding prior density functions.
+#' The cumulative distribution functions will be plotted if `cdf = TRUE`.
 #'
-#' @param x an object of class \code{c("name", "distribution")}, where
-#'   \code{"name"} is the name of the distribution.
-#' @param cdf A logical scalar.  If \code{cdf = TRUE} then the cumulative
+#' @param x an object of class `c("name", "distribution")`, where
+#'   `"name"` is the name of the distribution.
+#' @param prior A logical scalar. If `prior = TRUE` then include all
+#'   the prior distributions in the plot. Otherwise, plot only the posterior
+#'   distributions.
+#' @param cdf A logical scalar.  If `cdf = TRUE` then the cumulative
 #'   distribution function (c.d.f.) is plotted.  Otherwise, the probability
 #'   density function (p.d.f.), for a continuous variable, or the probability
 #'   mass function (p.m.f.), for a discrete variable, is plotted.
-#' @param p A numeric vector.  If \code{xlim} is not passed in \code{...}
-#'   then \code{p} is the fallback option for setting the range of values
+#' @param p A numeric vector.  If `xlim` is not passed in `...`
+#'   then `p` is the fallback option for setting the range of values
 #'   over which the p.m.f, p.d.f. or c.d.f is plotted.  See **Details**.
-#' @param len An integer scalar.  If \code{x} is a continuous distribution
-#'   object then \code{len} is the number of values at which the p.d.f or
-#'   c.d.f. is evaluated to produce the plot.  The larger \code{len} is the
+#' @param len An integer scalar.  If `x` is a continuous distribution
+#'   object then `len` is the number of values at which the p.d.f or
+#'   c.d.f. is evaluated to produce the plot.  The larger `len` is the
 #'   smoother is the curve.
-#' @param all A logical scalar.  If \code{all = TRUE} then a separate
-#'   distribution is plotted for all the combinations of parameter
-#'   values present in the parameter vectors present in \code{x}.  These
-#'   combinations are generated using \code{\link{expand.grid}}.  If
-#'   \code{all = FALSE} then the number of distributions plotted is equal to
-#'   the maximum of the lengths of these parameter vectors, with shorter
-#'   vectors recycled to this length if necessary using \code{\link{rep_len}}.
 #' @param legend_args A list of arguments to be passed to
-#'   \code{\link[graphics]{legend}}.  In particular, the argument \code{x}
-#'   (perhaps in conjunction with \code{legend_args$y}) can be used to set the
-#'   position of the legend.  If \code{legend_args$x} is not supplied then
-#'   \code{"bottomright"} is used if \code{cdf = TRUE} and \code{"topright"} if
-#'   \code{cdf = FALSE}.
-#' @param ...  Further arguments to be passed to \code{\link[graphics]{plot}},
-#'   \code{\link[stats:ecdf]{plot.ecdf}} and \code{\link[graphics]{lines}},
-#'   such as \code{xlim, ylim, xlab, ylab, main, lwd, lty, col, pch}.
-#' @details If \code{xlim} is passed in \code{...} then this determines the
+#'   [`legend()`][graphics::legend()].  In particular, the argument `x`
+#'   (perhaps in conjunction with `legend_args$y`) can be used to set the
+#'   position of the legend.  If `legend_args$x` is not supplied then
+#'   `"bottomright"` is used if `cdf = TRUE` and `"topright"` if
+#'   `cdf = FALSE`.
+#' @param ...  Further arguments to be passed to [`plot()`][graphics::plot()],
+#'   [`ecdf()`][stats::ecdf] and [`lines()`][graphics::lines()],
+#'   such as `xlim, ylim, xlab, ylab, main, lwd, lty, col, pch`.
+#' @details If `xlim` is passed in `...` then this determines the
 #'   range of values of the variable to be plotted on the horizontal axis.
-#'   If \code{x} is a discrete distribution object then the values for which
-#'   the p.m.f. or c.d.f. is plotted is the smallest set of consecutive
-#'   integers that contains both components of \code{xlim}.  Otherwise,
-#'   \code{xlim} is used directly.
-#'
-#'   If \code{xlim} is not passed in \code{...} then the range of values spans
+#'   If `xlim` is not passed in `...` then the range of values spans
 #'   the support of the distribution, with the following proviso: if the
-#'   lower (upper) endpoint of the distribution is \code{-Inf} (\code{Inf})
+#'   lower (upper) endpoint of the distribution is `-Inf` (`Inf`)
 #'   then the lower (upper) limit of the plotting range is set to the
-#'   \code{p[1]}\% (\code{p[2]}\%) quantile of the distribution.
-#'
-#'   If the name of \code{x} is a single upper case letter then that name is
-#'   used to labels the axes of the plot.  Otherwise, \code{x} and
-#'   \code{P(X = x)} or \code{f(x)} are used.
-#'
-#'   A legend is included only if at least one of the parameter vectors in
-#'   \code{x} has length greater than 1.
+#'   `p[1]`percent (`p[2]`percent) quantile of the distribution.
 #'
 #'   Plots of c.d.f.s are produced using calls to
-#'   \code{\link[stats]{approxfun}} and \code{\link[stats:ecdf]{plot.ecdf}}.
-#' @return An object with the same class as \code{x}, in which the parameter
-#'   vectors have been expanded to contain a parameter combination for each
-#'   function plotted.
-#' @examples
-#' B <- Binomial(20, 0.7)
-#' plot(B)
-#' plot(B, cdf = TRUE)
-#'
-#' B2 <- Binomial(20, c(0.1, 0.5, 0.9))
-#' plot(B2, legend_args = list(x = "top"))
-#' x <- plot(B2, cdf = TRUE)
-#' x$size
-#' x$p
-#'
-#' X <- Poisson(2)
-#' plot(X)
-#' plot(X, cdf = TRUE)
-#'
-#' G <- Gamma(c(1, 3), 1:2)
-#' plot(G)
-#' plot(G, all = TRUE)
-#' plot(G, cdf = TRUE)
-#'
-#' C <- Cauchy()
-#' plot(C, p = c(1, 99), len = 10000)
-#' plot(C, cdf = TRUE, p = c(1, 99))
+#'   [`approxfun()`][stats::approxfun] and [`ecdf()`][stats::ecdf].
+#' @return No return value, only the plot is produced.
+#' @seealso [`Bayesian`] for calculating products of functions for Bayesian
+#'   Inference using `"distribution"` objects.
+#' @section Examples:
+#' See the examples in [`Bayesian`].
 #' @export
-plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
-                           all = FALSE, legend_args = list(), prior = TRUE,
-                           ...) {
+plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
+                           len = 1000, legend_args = list(), ...) {
   if (!distributions3::is_distribution(x)) {
     stop("use only with \"distribution\" objects")
   }
@@ -96,41 +54,14 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   n_posteriors <- length(x)
   # To add the prior distribution(s) extract them from attr(x, "prior")
   if (prior) {
-     x <- c(x, attr(x, "prior"))
+    x <- c(x, attr(x, "prior"))
   }
   # Extract the name of the distribution
   distn <- class(x)[1]
-  # Supported distributions
-  discrete <- c(
-    "Bernoulli", "Binomial", "Categorical", "Geometric",
-    "HyperGeometric", "Multinomial", "NegativeBinomial", "Poisson"
-  )
-  continuous <- c(
-    "Beta", "Cauchy", "ChiSquare", "Erlang", "Exponential",
-    "Frechet", "FisherF", "GEV", "Gamma", "GP", "Gumbel",
-    "Laplace", "LogNormal", "Logistic", "Normal", "StudentsT",
-    "Tukey", "Uniform", "Weibull"
-  )
-  # Check that the distribution is recognised
-  if (!(distn %in% c(discrete, continuous))) {
-    stop("This distribution is not supported")
-  }
-  # Indicator of whether or not the distribution is discrete
-  x_is_discrete <- distn %in% discrete
   # The number of parameters and their names
   np <- length(colnames(x))
   par_names <- colnames(x)
-  # Expands the vector(s) of parameters to create a parameter combination for
-  # each function to be plotted.
-  if (all) {
-    xx <- expand.grid(as.data.frame(as.matrix(x)), KEEP.OUT.ATTRS = FALSE)
-    xx <- unique(xx)
-    class(xx) <- class(x)
-    n_distns <- length(xx)
-  } else {
-    xx <- x
-    n_distns <- length(xx)
-  }
+  n_distns <- length(x)
   # Create a title for the plot
   # If n_distns = 1 then place the parameter values in the title
   # If n_distns > 1 then place the parameter values in the legend
@@ -154,11 +85,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   if (cdf) {
     my_main <- paste(my_main, "c.d.f.")
   } else {
-    if (x_is_discrete) {
-      my_main <- paste(my_main, "p.m.f.")
-    } else {
-      my_main <- paste(my_main, "p.d.f.")
-    }
+    my_main <- paste(my_main, "p.d.f.")
   }
   # Extract user-supplied arguments for graphics::plot()
   user_args <- list(...)
@@ -186,11 +113,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   if (cdf) {
     my_ylab <- paste0("F(", my_xlab, ")")
   } else {
-    if (x_is_discrete) {
-      my_ylab <- paste0("P(", toupper(my_xlab), " = ", my_xlab, ")")
-    } else {
-      my_ylab <- paste0("f(", my_xlab, ")")
-    }
+    my_ylab <- paste0("f(", my_xlab, ")")
   }
   # Function to create the legend text
   create_legend_text <- function(x, n_distns) {
@@ -206,9 +129,9 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
                               main = my_main, lwd = 2, col = 1:n_posteriors,
                               lty = my_lty) {
     if (cdf) {
-      yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+      yvals <- t(distributions3::cdf(x, matrix(xvals, nrow = 1), drop = FALSE))
     } else {
-      yvals <- t(distributions3::pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
+      yvals <- t(distributions3::pdf(x, matrix(xvals, nrow = 1), drop = FALSE))
     }
     graphics::matplot(xvals, yvals, type = "l", xlab = xlab, ylab = ylab,
       axes = FALSE, lwd = lwd, lty = lty, main = main, col = col, ...)
@@ -221,10 +144,14 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     # If n_distns > 1 then add a legend
     if (n_distns > 1) {
       if (is.null(legend_args[["legend"]])) {
-        legend_args$legend <- create_legend_text(xx, n_distns)
+        legend_args$legend <- create_legend_text(x, n_distns)
       }
       if (is.null(legend_args[["title"]])) {
-        legend_args$title <- paste0(par_names, collapse = ", ")
+        if (prior) {
+          legend_args$title <- paste("posterior", "prior", sep = "        ")
+        } else {
+          legend_args$title <- "posterior"
+        }
       }
       if (is.null(legend_args[["col"]])) {
         legend_args$col <- col
@@ -234,6 +161,13 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
       }
       if (is.null(legend_args[["lty"]])) {
         legend_args$lty <- lty
+      }
+      if (is.null(legend_args[["ncol"]])) {
+        if (prior) {
+          legend_args$ncol <- 2
+        } else {
+          legend_args$ncol <- 1
+        }
       }
       do.call(graphics::legend, legend_args)
     }
@@ -254,5 +188,5 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     my_lty = 1
   }
   continuous_plot(x, xvals, ...)
-  return(invisible(xx))
+  return(invisible())
 }
