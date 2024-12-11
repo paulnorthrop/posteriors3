@@ -28,7 +28,7 @@
 #'   `cdf = FALSE`.
 #' @param ...  Further arguments to be passed to [`plot()`][graphics::plot()],
 #'   [`ecdf()`][stats::ecdf] and [`lines()`][graphics::lines()],
-#'   such as `xlim, ylim, xlab, ylab, main, lwd, lty, col, pch`.
+#'   such as `xlim`, `ylim`, `xlab`, `ylab`, `main`, `lwd`, `lty`, `col`, `pch`.
 #' @details If `xlim` is passed in `...` then this determines the
 #'   range of values of the variable to be plotted on the horizontal axis.
 #'   If `xlim` is not passed in `...` then the range of values spans

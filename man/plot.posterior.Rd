@@ -45,7 +45,7 @@ position of the legend.  If \code{legend_args$x} is not supplied then
 
 \item{...}{Further arguments to be passed to \code{\link[graphics:plot.default]{plot()}},
 \code{\link[stats:ecdf]{ecdf()}} and \code{\link[graphics:lines]{lines()}},
-such as \verb{xlim, ylim, xlab, ylab, main, lwd, lty, col, pch}.}
+such as \code{xlim}, \code{ylim}, \code{xlab}, \code{ylab}, \code{main}, \code{lwd}, \code{lty}, \code{col}, \code{pch}.}
 }
 \value{
 No return value, only the plot is produced.
