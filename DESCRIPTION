@@ -12,6 +12,7 @@ Description: Provides functions to perform univariate Bayesian analyses using
     object. If a conjugate prior is used then the posterior distribution object
     is also an S3 probability distribution object. 
 Imports: distributions3,
+    graphics,
     stats
 License: GPL (>= 3)
 Encoding: UTF-8
