@@ -92,6 +92,8 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   if (!distributions3::is_distribution(x)) {
     stop("use only with \"distribution\" objects")
   }
+  # How many posterior distributions are included in x?
+  n_posteriors <- length(x)
   # To add the prior distribution(s) extract them from attr(x, "prior")
   if (prior) {
      x <- c(x, attr(x, "prior"))
@@ -199,98 +201,17 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     }
     return(leg_text)
   }
-  # Plot function for discrete cdf with default arguments
-  discrete_cdf_plot <- function(x, xvals, ..., ylim = c(0, 1), xlab = my_xlab,
-                                ylab = my_ylab, lwd = 2, main = my_main,
-                                pch = 16, col = 1:n_distns) {
-    col <- rep_len(col, n_distns)
-    yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
-    rval <- stats::approxfun(xvals, yvals[, 1],
-      method = "constant",
-      yleft = 0, yright = 1, f = 0, ties = "ordered"
-    )
-    class(rval) <- c("ecdf", "stepfun", class(rval))
-    plot(rval,
-      ylim = ylim, xlab = xlab, ylab = ylab, axes = FALSE, lwd = lwd,
-      main = main, col = col[1], pch = pch, ...
-    )
-    if (n_distns > 1) {
-      for (i in 2:n_distns) {
-        rval <- stats::approxfun(xvals, yvals[, i],
-          method = "constant",
-          yleft = 0, yright = 1, f = 0,
-          ties = "ordered"
-        )
-        class(rval) <- c("ecdf", "stepfun", class(rval))
-        graphics::lines(rval, lwd = lwd, col = col[i], pch = pch, ...)
-      }
-      # Add a legend
-      if (is.null(legend_args[["legend"]])) {
-        legend_args$legend <- create_legend_text(xx, n_distns)
-      }
-      if (is.null(legend_args[["title"]])) {
-        legend_args$title <- paste0(par_names, collapse = ", ")
-      }
-      if (is.null(legend_args[["col"]])) {
-        legend_args$col <- col
-      }
-      if (is.null(legend_args[["lwd"]])) {
-        legend_args$lwd <- lwd
-      }
-      if (is.null(legend_args[["lty"]])) {
-        legend_args$lty <- 1
-      }
-      if (is.null(legend_args[["pch"]])) {
-        legend_args$pch <- pch
-      }
-      do.call(graphics::legend, legend_args)
-    }
-    graphics::axis(1, at = xvals)
-    graphics::axis(2)
-  }
-  # Plot function for discrete pmf with default arguments
-  discrete_pmf_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
-                                lwd = 2, main = my_main, pch = 16,
-                                col = 1:n_distns) {
-    yvals <- t(distributions3::pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
-    graphics::matplot(xvals, yvals,
-      type = "p", xlab = xlab, ylab = ylab,
-      axes = FALSE, lwd = lwd, main = main, pch = pch,
-      col = col, ...
-    )
-    graphics::axis(1, at = xvals)
-    graphics::axis(2)
-    # If n_distns > 1 then add a legend
-    if (n_distns > 1) {
-      if (is.null(legend_args[["legend"]])) {
-        legend_args$legend <- create_legend_text(xx, n_distns)
-      }
-      if (is.null(legend_args[["title"]])) {
-        legend_args$title <- paste0(par_names, collapse = ", ")
-      }
-      if (is.null(legend_args[["col"]])) {
-        legend_args$col <- col
-      }
-      if (is.null(legend_args[["pch"]])) {
-        legend_args$pch <- pch
-      }
-      do.call(graphics::legend, legend_args)
-    }
-  }
   # Plot function for continuous distributions with defaults
   continuous_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
-                              lwd = 2, lty = 1, main = my_main,
-                              col = 1:n_distns) {
+                              main = my_main, lwd = 2, col = 1:n_posteriors,
+                              lty = rep(1:n_posteriors, each = n_posteriors)) {
     if (cdf) {
       yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     } else {
       yvals <- t(distributions3::pdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     }
-
-    graphics::matplot(xvals, yvals,
-      type = "l", xlab = xlab, ylab = ylab,
-      axes = FALSE, lwd = lwd, lty = lty, main = main, ...
-    )
+    graphics::matplot(xvals, yvals, type = "l", xlab = xlab, ylab = ylab,
+      axes = FALSE, lwd = lwd, lty = lty, main = main, col = col, ...)
     graphics::axis(1)
     graphics::axis(2)
     graphics::box(bty = "l")
@@ -325,17 +246,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
       legend_args[["x"]] <- "topright"
     }
   }
-  if (x_is_discrete) {
-    # Assume integer support
-    xvals <- floor(my_xlim[1]):ceiling(my_xlim[2])
-    if (cdf) {
-      discrete_cdf_plot(x, xvals, ...)
-    } else {
-      discrete_pmf_plot(x, xvals, ...)
-    }
-  } else {
-    xvals <- seq(my_xlim[1], my_xlim[2], length.out = len)
-    continuous_plot(x, xvals, ...)
-  }
+  xvals <- seq(my_xlim[1], my_xlim[2], length.out = len)
+  continuous_plot(x, xvals, ...)
   return(invisible(xx))
 }
