@@ -75,8 +75,8 @@ test_that("2 Binomials, add_data(): adding a data frame returns the correct list
   testthat::expect_equal(attr(d_df, "data"), list_data, ignore_attr = TRUE)
 })
 
-matrix_data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
-colnames(matrix_data) <-  c("data1", "data2")
+matrix_data <- matrix(c(1:2, NA, 1:3), nrow = 2, ncol = 3, byrow = TRUE)
+rownames(matrix_data) <-  c("data1", "data2")
 d_mat <- add_data(d2, matrix_data)
 # Use ignore_attr to ignore the attributes resulting from na.omit()
 test_that("2 Binomials, add_data(): adding a matrix returns the correct list", {
@@ -104,8 +104,8 @@ test_that("1 Binomial, add_data(): adding a data frame returns the correct list"
   testthat::expect_equal(attr(d_df, "data"), list_data, ignore_attr = TRUE)
 })
 
-matrix_data <- matrix(c(NA, NA, 1, NA, 2, NA), nrow = 6, ncol = 1)
-colnames(matrix_data) <- "data1"
+matrix_data <- matrix(c(NA, NA, 1, NA, 2, NA), nrow = 1, ncol = 6, byrow = TRUE)
+rownames(matrix_data) <- "data1"
 d_mat <- add_data(d1, matrix_data)
 # Use ignore_attr to ignore the attributes resulting from na.omit()
 test_that("1 Binomial, add_data(): adding a data frame returns the correct list", {
