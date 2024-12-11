@@ -44,6 +44,7 @@
 #'   distribution used.
 #'
 #' @seealso [`add_data()`] for adding data to a `"distribution"` object.
+#' @seealso [`plot.posterior`] for plotting posterior and prior distributions.
 #'
 #' @examples
 #' library(distributions3)

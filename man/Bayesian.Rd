@@ -125,4 +125,6 @@ plot(posterior, legend_args = list(x = "topleft"))
 }
 \seealso{
 \code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
+
+\code{\link{plot.posterior}} for plotting posterior and prior distributions.
 }
