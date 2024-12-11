@@ -204,7 +204,7 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
   # Plot function for continuous distributions with defaults
   continuous_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
                               main = my_main, lwd = 2, col = 1:n_posteriors,
-                              lty = rep(1:n_posteriors, each = n_posteriors)) {
+                              lty = my_lty) {
     if (cdf) {
       yvals <- t(distributions3::cdf(xx, matrix(xvals, nrow = 1), drop = FALSE))
     } else {
@@ -247,6 +247,12 @@ plot.posterior <- function(x, cdf = FALSE, p = c(0.1, 99.9), len = 1000,
     }
   }
   xvals <- seq(my_xlim[1], my_xlim[2], length.out = len)
+  #
+  if (prior) {
+    my_lty <- rep(1:2, each = n_posteriors)
+  } else {
+    my_lty = 1
+  }
   continuous_plot(x, xvals, ...)
   return(invisible(xx))
 }
