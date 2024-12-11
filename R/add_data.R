@@ -8,10 +8,11 @@
 #'   [`Binomial()`][distributions3::Binomial()] etc.
 #' @param data A numeric vector, matrix, data frame or list providing a numeric
 #'   vector of data for each of the `length(d)` distinct variables in `d`.
-#'   `data` may be a matrix with `length(d)` columns, a data frame with
-#'   `length(d)` variables or a list of length `length(d)`. A matrix or data
-#'   frame may contain `NA` values. Only if `length(d) = 1` may `data` be a
-#'   numeric vector.
+#'   `data` may be a matrix with `length(d)` **rows** (for consistency with
+#'   [`random()`][distributions3::random()], a data frame with `length(d)`
+#'   variables or a list of length `length(d)`. A matrix or data frame may
+#'   contain `NA` values. Only if `length(d) = 1` may `data` be a numeric
+#'   vector.
 #'
 #' @details All observations in the data must be in the support of the
 #'   probability distribution `d`. See [`support()`][distributions3::support()].
@@ -49,8 +50,8 @@
 #' data <- list(1:2, 1:3)
 #' # data is a data frame with 2 variables: one per Binomial distribution
 #' data <- data.frame(data1 = c(1:2, NA), data2 = 1:3)
-#' # data is a matrix with 2 columns: one per Binomial distribution
-#' data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
+#' # data is a matrix with 2 rows: one per Binomial distribution
+#' data <- matrix(c(1:2, NA, 1:3), nrow = 2, ncol = 3, byrow = TRUE)
 #'
 #' likelihood <- add_data(M, data)
 #' likelihood
@@ -71,10 +72,11 @@ add_data <- function(d, data) {
       stop("a 'data' list must have length ", nvars)
     }
   } else if (inherits(data, "matrix")) {
-    if (ncol(data) != nvars) {
-      stop("a 'data' matrix must have length(d) = ", nvars, " columns")
+    if (nrow(data) != nvars) {
+      stop("a 'data' matrix must have length(d) = ", nvars, " rows")
     }
-    data <- as.list(as.data.frame(data))
+    # Use t() so that the matrix has nvars columns
+    data <- as.list(as.data.frame(t(data)))
   } else if (is.numeric(data)) {
     data <- list(data)
   } else {

@@ -13,10 +13,11 @@ to \code{\link[distributions3:Normal]{Normal()}} or
 
 \item{data}{A numeric vector, matrix, data frame or list providing a numeric
 vector of data for each of the \code{length(d)} distinct variables in \code{d}.
-\code{data} may be a matrix with \code{length(d)} columns, a data frame with
-\code{length(d)} variables or a list of length \code{length(d)}. A matrix or data
-frame may contain \code{NA} values. Only if \code{length(d) = 1} may \code{data} be a
-numeric vector.}
+\code{data} may be a matrix with \code{length(d)} \strong{rows} (for consistency with
+\code{\link[distributions3:random]{random()}}, a data frame with \code{length(d)}
+variables or a list of length \code{length(d)}. A matrix or data frame may
+contain \code{NA} values. Only if \code{length(d) = 1} may \code{data} be a numeric
+vector.}
 }
 \value{
 An object with the same class as the input \code{d}, that is, inheriting
@@ -57,8 +58,8 @@ M <- Binomial(size = c(5, 10))
 data <- list(1:2, 1:3)
 # data is a data frame with 2 variables: one per Binomial distribution
 data <- data.frame(data1 = c(1:2, NA), data2 = 1:3)
-# data is a matrix with 2 columns: one per Binomial distribution
-data <- matrix(c(1:2, NA, 1:3), nrow = 3, ncol = 2)
+# data is a matrix with 2 rows: one per Binomial distribution
+data <- matrix(c(1:2, NA, 1:3), nrow = 2, ncol = 3, byrow = TRUE)
 
 likelihood <- add_data(M, data)
 likelihood
