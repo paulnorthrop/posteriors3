@@ -83,7 +83,7 @@ add_data <- function(d, data) {
     stop("'data' is not of an appropriate type")
   }
   # Remove any missings
-  data <- lapply(data, na.omit)
+  data <- lapply(data, stats::na.omit)
   attr(d, "data") <- data
   return(d)
 }
