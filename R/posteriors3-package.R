@@ -12,7 +12,8 @@
 #'   (2024). distributions3: Probability Distributions as S3 Objects. R package
 #'   version 0.2.2, \doi{10.32614/CRAN.package.distributions3}
 #'
+#' @import distributions3
 #' @importFrom graphics plot
-#' @importFrom stats predict
+#' @importFrom stats predict quantile
 #' @docType package
 "_PACKAGE"
