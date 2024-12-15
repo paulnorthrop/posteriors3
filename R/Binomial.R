@@ -23,6 +23,8 @@ posterior.Binomial <- function(x, y) {
     posterior_beta = prior_beta + sum_size_minus_data
     # Return the Beta posterior as a "distribution" object
     z <- Beta(alpha = posterior_alpha, beta = posterior_beta)
+  } else {
+    stop("A conjugate Beta prior must be used for Binomial data")
   }
   # Add the prior(s) as an attribute for later use
   attr(z, "prior") <- y
