@@ -2,17 +2,14 @@
 #'
 #' Generic functions for performing univariate Bayesian inference using
 #' `"distribution"` objects. A generic multiplication operator `*.distribution`
-#' can create either a posterior distribution as a product of a likelihood and
-#' prior distribution or a single prior distribution as a product of two
-#' constituent prior distributions. Alternatively, `posterior(x, y)` or
-#' `prior(x, y)` can be used, respectively.
+#' creates a posterior distribution as a product of a likelihood and
+#' prior distribution. Alternatively, `posterior(x, y)` or can be used.
 #'
-#' @param x To specify either a **likelihood** or **prior** distribution. A
-#'   probability distribution object inheriting from class `"distribution"`
-#'   such as those created by a call to [`Normal()`][distributions3::Normal()]
-#'   or [`Binomial()`][distributions3::Binomial()] etc. If `x` is intended to
-#'   specify a **likelihood** then `x` must have an extra attribute `"data"`,
-#'   added using [`add_data()`].
+#' @param x To specify a **likelihood**. A probability distribution object
+#'   inheriting from class `"distribution"` such as those created by a call to
+#'   [`Normal()`][distributions3::Normal()] or
+#'   [`Binomial()`][distributions3::Binomial()] etc. `x` must have an extra
+#'   attribute `"data"`, added using [`add_data()`].
 #' @param y To specify a **prior** distribution. A probability distribution
 #'   object inheriting from class `"distribution"`.
 #'
@@ -25,20 +22,14 @@
 #'   the prior distribution supplied by `y`. `posterior(x, y)` will give the
 #'   same output.
 #'
-#'   Otherwise, both `x` and `y` are assumed to provide independent prior
-#'   distributions for two different parameters of a distribution. For example,
-#'   `x` could be used to set a prior distribution for the mean \eqn{\mu}, and
-#'   `y` a prior distribution for the variance \eqn{\sigma^2}, of a Normal
-#'   distribution. `prior(x, y)` will give the same output.
-#'
-#'   A message will note whether a posterior distribution or a prior
-#'   distribution has been created. Such messages can be suppressed using
+#'   A message will note likelihood and prior combination used to create the
+#'   posterior distribution. Such messages can be suppressed using
 #'   [`suppressMessages()`][message()] if desired.
 #'
-#'   Explain conjugacy and give an example (Binomial-Beta?).
+#'   **Explain conjugacy and give an example (Binomial-Beta?).
 #'   If prior is conjugate then ... distribution object: same distribution type
 #'   as the prior distribution in `y`.
-#'   If not then ... sample from posterior.
+#'   If not then ... sample from posterior.**
 #'
 #' @returns A probability distribution object from the same family as the prior
 #'   distribution used.
@@ -49,9 +40,11 @@
 #' @examples
 #' library(distributions3)
 #'
+#' ### Binomial likelihood, conjugate Beta prior for p
+#'
 #' ## One Binomial distribution, with size 10
 #'
-#' # Note: the value of p is only used in the simulation of the example data
+#' # Note: the value of p is only use to simulate example data
 #' N <- Binomial(size = 10, p = 0.2)
 #'
 #' # Simulate a sample of size 5 from a Binomial(20, 0.2) distribution
@@ -63,7 +56,7 @@
 #'
 #' # Set a conjugate (uniform) prior distribution
 #' prior <- Beta(alpha = 1, beta = 1)
-#' # Determine the posterior distribution
+#' # Construct the posterior distribution
 #' posterior <- likelihood * prior
 #' posterior
 #' plot(posterior)
@@ -77,7 +70,7 @@
 #'
 #' ## Two Binomial distributions, with sizes 5 and 10
 #'
-#' # Note: the value of p is only used in the simulation of the example data
+#' # Note: the value of p is only use to simulate example data
 #' M <- Binomial(size = c(5, 10), p = 0.8)
 #'
 #' # Simulate samples of size 8 from
@@ -104,6 +97,25 @@
 #' posterior
 #' plot(posterior, legend_args = list(x = "topleft"))
 #'
+#' ### Normal likelihood, conjugate (normal, gamma) prior for (mu, 1/sigma^2)
+#'
+#' # Note: the values of mu and sigma are only used to simulate example data
+#' X <- Normal(mu = 10, sigma = 2)
+#'
+#' # Simulate a sample of size 15 from a Normal(10, 2^2) distribution
+#' set.seed(3)
+#' data <- random(X, 15)
+#'
+#' # Add the data, a numeric vector
+#' likelihood <- add_data(X, data)
+#'
+#' # Set a Normal-Gamma prior
+#'
+#' prior <- NormalGamma()
+#' #posterior <- likelihood * prior
+#' #posterior
+#' #plot(posterior[[1]])
+#'
 #' @name Bayesian
 NULL
 ## NULL
@@ -116,29 +128,18 @@ NULL
   if (!inherits(x, "distribution") | !inherits(y, "distribution")) {
     stop("'x' and 'y' must each be a \"distribution\" object")
   }
-  # Check whether x has data as an attribute
+  # Check that the likelihood object x has appropriate "data" as an attribute
+  check_data(x)
   # If it has then call the relevant S3 posterior() method based on class(x)[1]
-  # Otherwise call the relevant S3 prior() method based on class(x)[1]
-  if (!is.null(attr(x, "data"))) {
-    z <- posterior(x, y)
-    message("Posterior: ", class(x)[1], " likelihood, ", class(y)[1], " prior ")
-  } else {
-    z <- prior(x, y)
-    message("Prior: ", class(x)[1], " x ", class(y)[1])
-  }
+  z <- posterior(x, y)
+  message("Posterior: ", class(x)[1], " likelihood, ", class(y)[1], " prior ")
   return(z)
-}
-
-#' @rdname Bayesian
-#' @order 3
-#' @export
-posterior <- function(x, y) {
-  UseMethod("posterior")
 }
 
 #' @rdname Bayesian
 #' @order 2
 #' @export
-prior <- function(x, y) {
-  UseMethod("prior")
+posterior <- function(x, y) {
+  UseMethod("posterior")
 }
+
