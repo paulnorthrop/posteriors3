@@ -1,8 +1,6 @@
 #' @export
 #' @rdname Bayesian
 posterior.Binomial <- function(x, y) {
-  # Check that the likelihood object x has appropriate data as an attribute
-  check_data(x)
   # Extract the name of the prior distribution
   prior_distribution <- class(y)[1]
   # If prior is conjugate then infer the posterior distribution
