@@ -116,11 +116,11 @@
 #' #posterior
 #' #plot(posterior[[1]])
 #'
-#' @name Bayesian
+#' @name posterior
 NULL
 ## NULL
 
-#' @rdname Bayesian
+#' @rdname posterior
 #' @order 1
 #' @export
 `*.distribution` <- function(x, y) {
@@ -136,10 +136,9 @@ NULL
   return(z)
 }
 
-#' @rdname Bayesian
+#' @rdname posterior
 #' @order 2
 #' @export
 posterior <- function(x, y) {
   UseMethod("posterior")
 }
-
