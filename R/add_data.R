@@ -23,7 +23,7 @@
 #' @return An object with the same class as the input `d`, that is, inheriting
 #'   from class `"distribution"`, but with the extra attribute `"data"`.
 #'
-#' @seealso [`Bayesian`] for calculating products of functions for Bayesian
+#' @seealso [`posterior`] for calculating products of functions for Bayesian
 #'   Inference using `"distribution"` objects.
 #'
 #' @examples

@@ -1,5 +1,5 @@
 #' @export
-#' @rdname Bayesian
+#' @rdname posterior
 posterior.Binomial <- function(x, y) {
   # Extract the name of the prior distribution
   prior_distribution <- class(y)[1]

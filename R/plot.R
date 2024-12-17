@@ -40,10 +40,10 @@
 #'   Plots of c.d.f.s are produced using calls to
 #'   [`approxfun()`][stats::approxfun] and [`ecdf()`][stats::ecdf].
 #' @return No return value, only the plot is produced.
-#' @seealso [`Bayesian`] for calculating products of functions for Bayesian
+#' @seealso [`posterior`] for calculating products of functions for Bayesian
 #'   Inference using `"distribution"` objects.
 #' @section Examples:
-#' See the examples in [`Bayesian`].
+#' See the examples in [`posterior`].
 #' @export
 plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
                            len = 1000, legend_args = list(), ...) {

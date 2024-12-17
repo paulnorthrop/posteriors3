@@ -19,7 +19,7 @@ version 0.2.2, \doi{10.32614/CRAN.package.distributions3}
 \seealso{
 \code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
 
-\code{\link{Bayesian}} for calculating products of functions for Bayesian
+\code{\link{posterior}} for calculating products of functions for Bayesian
 Inference using \code{"distribution"} objects.
 }
 \author{

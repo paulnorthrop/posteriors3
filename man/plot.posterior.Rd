@@ -69,10 +69,10 @@ Plots of c.d.f.s are produced using calls to
 }
 \section{Examples}{
 
-See the examples in \code{\link{Bayesian}}.
+See the examples in \code{\link{posterior}}.
 }
 
 \seealso{
-\code{\link{Bayesian}} for calculating products of functions for Bayesian
+\code{\link{posterior}} for calculating products of functions for Bayesian
 Inference using \code{"distribution"} objects.
 }
