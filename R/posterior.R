@@ -1,4 +1,4 @@
-#' Products of Functions for Bayesian Inference
+#' Create a posterior distribution
 #'
 #' Generic functions for performing univariate Bayesian inference using
 #' `"distribution"` objects. A generic multiplication operator `*.distribution`

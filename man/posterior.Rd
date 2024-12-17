@@ -5,7 +5,7 @@
 \alias{posterior}
 \alias{posterior.Binomial}
 \alias{posterior.Normal}
-\title{Products of Functions for Bayesian Inference}
+\title{Create a posterior distribution}
 \usage{
 \method{*}{distribution}(x, y)
 
