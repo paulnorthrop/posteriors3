@@ -39,7 +39,9 @@
 #'
 #'   Plots of c.d.f.s are produced using calls to
 #'   [`approxfun()`][stats::approxfun] and [`ecdf()`][stats::ecdf].
-#' @return No return value, only the plot is produced.
+#' @return The input object `x` is returned. If `prior = TRUE` then the
+#'   prior distribution(s) in `attr(x, "prior")` are appended to the posterior
+#'   distribution(s) in `x`.
 #' @seealso [`posterior`] for calculating products of functions for Bayesian
 #'   Inference using `"distribution"` objects.
 #' @section Examples:
@@ -188,5 +190,5 @@ plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
     my_lty = 1
   }
   continuous_plot(x, xvals, ...)
-  return(invisible())
+  return(invisible(x))
 }
