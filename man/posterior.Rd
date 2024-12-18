@@ -126,11 +126,14 @@ data <- random(X, 15)
 # Add the data, a numeric vector
 likelihood <- add_data(X, data)
 
-# Set a Normal-Gamma prior
+# Set a Normal-Gamma prior for (mean, precision)
 
-prior <- NormalGamma()
-#posterior <- likelihood * prior
-#posterior
+prior <- NormalGamma(names = c("mean", "precision"))
+posterior <- likelihood * prior
+posterior
+# Find the marginal posterior distributions for mean and precision
+marginals(posterior)
+
 #plot(posterior[[1]])
 
 }
