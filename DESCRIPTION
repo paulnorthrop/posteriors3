@@ -13,15 +13,19 @@ Description: Provides functions to perform univariate Bayesian analyses using
     is also an S3 probability distribution object. 
 Imports: distributions3,
     graphics,
+    rlang,
     stats
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 URL: https://paulnorthrop.github.io/posteriors3/, https://github.com/paulnorthrop/posteriors3
 BugReports: https://github.com/paulnorthrop/posteriors3/issues
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
