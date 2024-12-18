@@ -33,6 +33,7 @@ each distribution.
 Evaluate the joint probability density function of a Normal-Gamma distribution
 }
 \examples{
+library(distributions3)
 X <- NormalGamma()
 pdf(X, matrix(c(0, 0), ncol = 2))
 }

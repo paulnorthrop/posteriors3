@@ -119,6 +119,7 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #'   each distribution.
 #'
 #' @examples
+#' library(distributions3)
 #' X <- NormalGamma()
 #' pdf(X, matrix(c(0, 0), ncol = 2))
 #' @export

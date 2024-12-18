@@ -117,8 +117,6 @@
 #' # Find the marginal posterior distributions for mean and precision
 #' marginals(posterior)
 #'
-#' #plot(posterior[[1]])
-#'
 #' @name posterior
 NULL
 ## NULL

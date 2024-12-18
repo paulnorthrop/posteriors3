@@ -134,8 +134,6 @@ posterior
 # Find the marginal posterior distributions for mean and precision
 marginals(posterior)
 
-#plot(posterior[[1]])
-
 }
 \seealso{
 \code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
