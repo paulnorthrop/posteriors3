@@ -48,7 +48,9 @@ position of the legend.  If \code{legend_args$x} is not supplied then
 such as \code{xlim}, \code{ylim}, \code{xlab}, \code{ylab}, \code{main}, \code{lwd}, \code{lty}, \code{col}, \code{pch}.}
 }
 \value{
-No return value, only the plot is produced.
+The input object \code{x} is returned. If \code{prior = TRUE} then the
+prior distribution(s) in \code{attr(x, "prior")} are appended to the posterior
+distribution(s) in \code{x}.
 }
 \description{
 Plot method for an object inheriting from class \code{"posterior"}.
