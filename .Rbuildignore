@@ -3,3 +3,6 @@
 ^checks$
 ^README\.Rmd$
 ^LICENSE\.md$
+^doc$
+^Meta$
+^\.github$
