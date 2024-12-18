@@ -102,7 +102,7 @@ random.LocationScaleT <- function(x, n = 1L, drop = TRUE, ...) {
   if (n == 0L) {
     return(numeric(0L))
   }
-  FUN <- function(at, d) rt(n = at, df = d$df)
+  FUN <- function(at, d) stats::rt(n = at, df = d$df)
   rval <- distributions3::apply_dpqr(d = x, FUN = FUN, at = n, type = "random",
                                      drop = drop)
   rval <- x$sigma * rval + x$mu
@@ -112,7 +112,7 @@ random.LocationScaleT <- function(x, n = 1L, drop = TRUE, ...) {
 #' @export
 pdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
   FUN <- function(at, d) {
-    dt(x = (at - d$mu) / d$sigma, df = d$df, ...) / d$sigma
+    stats::dt(x = (at - d$mu) / d$sigma, df = d$df, ...) / d$sigma
   }
   return(distributions3::apply_dpqr(d = d, FUN = FUN, at = x, type = "density",
                                     drop = drop, elementwise = elementwise))
@@ -121,7 +121,7 @@ pdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
 #' @export
 log_pdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
   FUN <- function(at, d) {
-    dt(x = (at - d$mu) / d$sigma, df = d$df, log = TRUE, ...) - log(d$sigma)
+    stats::dt(x = (at - d$mu) / d$sigma, df = d$df, log = TRUE, ...) - log(d$sigma)
   }
   return(distributions3::apply_dpqr(d = d, FUN = FUN, at = x, type = "logLik",
                                     drop = drop, elementwise = elementwise))
@@ -129,7 +129,7 @@ log_pdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
 
 #' @export
 cdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
-  FUN <- function(at, d) pt(q = (at - d$mu) / d$sigma, df = d$df, ...)
+  FUN <- function(at, d) stats::pt(q = (at - d$mu) / d$sigma, df = d$df, ...)
   return(distributions3::apply_dpqr(d = d, FUN = FUN, at = x,
                                     type = "probability", drop = drop,
                                     elementwise = elementwise))
@@ -137,7 +137,7 @@ cdf.LocationScaleT <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
 
 #' @export
 quantile.LocationScaleT <- function(x, probs, drop = TRUE, elementwise = NULL, ...) {
-  FUN <- function(at, d) qt(p = at, df = d$df, ...)
+  FUN <- function(at, d) stats::qt(p = at, df = d$df, ...)
   rval <- distributions3::apply_dpqr(d = x, FUN = FUN, at = probs,
                                      type = "quantile", drop = drop,
                                      elementwise = elementwise)
@@ -156,11 +156,11 @@ support.LocationScaleT <- function(d, drop = TRUE, ...) {
 #' @exportS3Method
 is_discrete.LocationScaleT <- function(d, ...) {
   rlang::check_dots_used()
-  return(setNames(rep.int(FALSE, length(d)), names(d)))
+  return(stats::setNames(rep.int(FALSE, length(d)), names(d)))
 }
 
 #' @exportS3Method
 is_continuous.LocationScaleT <- function(d, ...) {
   rlang::check_dots_used()
-  return(setNames(rep.int(TRUE, length(d)), names(d)))
+  return(stats::setNames(rep.int(TRUE, length(d)), names(d)))
 }
