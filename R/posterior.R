@@ -62,7 +62,7 @@
 #' plot(posterior)
 #'
 #' # Compare two different conjugate prior distributions
-#' prior <- Beta(alpha = c(1, 10), beta = c(1,10))
+#' prior <- Beta(alpha = c(1, 10), beta = c(1, 10))
 #' # Determine the posterior distribution
 #' posterior <- likelihood * prior
 #' posterior
