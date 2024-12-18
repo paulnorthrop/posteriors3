@@ -82,6 +82,7 @@ variance.NormalGamma <- function(x, ...) {
 #'   then a matrix with `n` columns is returned, with each row containing a
 #'   random sample from one of the distributions.
 #' @examples
+#' library(distributions3)
 #' X <- NormalGamma(mu = 10, lambda = 1, shape = 5, rate = 1)
 #' random(X, 10)
 #'
@@ -103,11 +104,11 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #' Evaluate the joint probability density function of a Normal-Gamma distribution
 #'
 #' @param d A `NormalGamma` object created by a call to [NormalGamma()].
-#' @param x,y Numeric vectors of respective values for the \eqn{X \mid Y}
-#'   and \eqn{Y} components of the joint distribution of \eqn{(X, Y)}, where
+#' @param x A numeric matrix with 2 columns. Column 1 provides the values for
+#'   the \eqn{X \mid Y} component and column 2 the corresponding values of the
+#'   \eqn{Y} components of the joint distribution of \eqn{(X, Y)}, where
 #'   \eqn{X \mid Y} has a Normal distribution with mean \eqn{\mu} and
-#'   precision \eqn{\lambda Y} and has a Gamma distribution. The vectors `x`
-#'   and `y` must have the same length.
+#'   precision \eqn{\lambda Y} and has a Gamma distribution.
 #' @param drop logical. Should the result be simplified to a vector if possible?
 #' @param ... Not used.
 #'
@@ -119,17 +120,11 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #'
 #' @examples
 #' X <- NormalGamma()
-#' pdf(X, 0)
+#' pdf(X, matrix(c(0, 0), ncol = 2))
 #' @export
-pdf.NormalGamma <- function(d, x, y, drop = TRUE, ...) {
-  lengths <- unique(c(length(x), length(y)))
-  stopifnot(
-    "'x' and 'y' lengths do not match (only scalars may be recycled)" =
-      length(lengths) == 1 | (length(lengths) == 2 & is.element(1, lengths))
-  )
-  max_leng <- max(lengths)
-  x <- rep_len(x, max_leng)
-  y <- rep_len(y, max_leng)
+pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+  y <- x[, 2]
+  x <- x[, 1]
   FUN <- function(i, x, y, d) {
     y_log_density <- stats::dgamma(x = y, shape = d$shape[i], rate = d$rate[i],
                                    log = TRUE)
@@ -152,15 +147,9 @@ pdf.NormalGamma <- function(d, x, y, drop = TRUE, ...) {
 
 #' @rdname pdf.NormalGamma
 #' @export
-log_pdf.NormalGamma <- function(d, x, y, drop = TRUE, ...) {
-  lengths <- unique(c(length(x), length(y)))
-  stopifnot(
-    "'x' and 'y' lengths do not match (only scalars may be recycled)" =
-      length(lengths) == 1 | (length(lengths) == 2 & is.element(1, lengths))
-  )
-  max_leng <- max(lengths)
-  x <- rep_len(x, max_leng)
-  y <- rep_len(y, max_leng)
+log_pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+  y <- x[, 2]
+  x <- x[, 1]
   FUN <- function(i, x, y, d) {
     y_log_density <- stats::dgamma(x = y, shape = d$shape[i], rate = d$rate[i],
                                    log = TRUE)

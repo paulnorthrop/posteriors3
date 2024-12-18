@@ -5,18 +5,18 @@
 \alias{log_pdf.NormalGamma}
 \title{Evaluate the joint probability density function of a Normal-Gamma distribution}
 \usage{
-\method{pdf}{NormalGamma}(d, x, y, drop = TRUE, ...)
+\method{pdf}{NormalGamma}(d, x, drop = TRUE, ...)
 
-\method{log_pdf}{NormalGamma}(d, x, y, drop = TRUE, ...)
+\method{log_pdf}{NormalGamma}(d, x, drop = TRUE, ...)
 }
 \arguments{
 \item{d}{A \code{NormalGamma} object created by a call to \code{\link[=NormalGamma]{NormalGamma()}}.}
 
-\item{x, y}{Numeric vectors of respective values for the \eqn{X \mid Y}
-and \eqn{Y} components of the joint distribution of \eqn{(X, Y)}, where
+\item{x}{A numeric matrix with 2 columns. Column 1 provides the values for
+the \eqn{X \mid Y} component and column 2 the corresponding values of the
+\eqn{Y} components of the joint distribution of \eqn{(X, Y)}, where
 \eqn{X \mid Y} has a Normal distribution with mean \eqn{\mu} and
-precision \eqn{\lambda Y} and has a Gamma distribution. The vectors \code{x}
-and \code{y} must have the same length.}
+precision \eqn{\lambda Y} and has a Gamma distribution.}
 
 \item{drop}{logical. Should the result be simplified to a vector if possible?}
 
@@ -34,5 +34,5 @@ Evaluate the joint probability density function of a Normal-Gamma distribution
 }
 \examples{
 X <- NormalGamma()
-pdf(X, 0)
+pdf(X, matrix(c(0, 0), ncol = 2))
 }
