@@ -5,15 +5,15 @@
 \alias{marginals.NormalGamma}
 \title{Extract marginal distributions}
 \usage{
-marginals(object, ...)
+marginals(d, ...)
 
 \method{marginals}{NormalGamma}(d, ...)
 }
 \arguments{
-\item{...}{Not used.}
-
 \item{d}{A probability distribution object inheriting from class
 \code{"distribution"} such as those created by a call to \code{\link[=NormalGamma]{NormalGamma()}}.}
+
+\item{...}{Not used.}
 }
 \value{
 A list with \code{length(d)} components. Each component is a univariate

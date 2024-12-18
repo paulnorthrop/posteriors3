@@ -16,7 +16,7 @@ NULL
 
 #' @rdname marginals
 #' @export
-marginals <- function(object, ...) {
+marginals <- function(d, ...) {
   UseMethod("marginals")
 }
 
@@ -36,5 +36,5 @@ marginals.NormalGamma <- function(d, ...) {
   X <- LocationScaleT(mu = lst_mu, sigma = lst_sigma, df = lst_df)
   # The marginal for Y
   Y <- distributions3::Gamma(shape = d$shape, rate = d$rate)
-  return(setNames(list(X, Y), attr(d, "variable_names")))
+  return(stats::setNames(list(X, Y), attr(d, "variable_names")))
 }
