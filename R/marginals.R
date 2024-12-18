@@ -36,7 +36,5 @@ marginals.NormalGamma <- function(d, ...) {
   X <- LocationScaleT(mu = lst_mu, sigma = lst_sigma, df = lst_df)
   # The marginal for Y
   Y <- distributions3::Gamma(shape = d$shape, rate = d$rate)
-  rval <- list(X = X, Y = Y)
-  names(rval) <- attr(d, "variable_names")
-  return(rval)
+  return(setNames(list(X, Y), attr(d, "variable_names")))
 }
