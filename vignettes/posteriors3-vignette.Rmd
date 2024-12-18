@@ -1,0 +1,65 @@
+---
+title: "Overview of the posteriors3 package"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{posteriors3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: posteriors3.bib
+csl: taylor-and-francis-chicago-author-date.csl
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7, 
+  fig.height = 5,
+  fig.align='center',
+  global.par = TRUE
+)
+```
+
+```{r setup}
+library(posteriors3)
+```
+
+@distributions3
+
+# Binomial
+
+```{r, warning = FALSE, message = FALSE}
+library(distributions3)
+```
+
+```{r}
+### Binomial likelihood, conjugate Beta prior for p
+
+## One Binomial distribution, with size 10
+
+# Note: the value of p is only use to simulate example data
+N <- Binomial(size = 10, p = 0.2)
+
+# Simulate a sample of size 5 from a Binomial(20, 0.2) distribution
+set.seed(3)
+data <- random(N, 5)
+
+# Add the data, a numeric vector
+likelihood <- add_data(N, data)
+
+# Set a conjugate (uniform) prior distribution
+prior <- Beta(alpha = 1, beta = 1)
+# Construct the posterior distribution
+posterior <- likelihood * prior
+posterior
+```
+
+```{r, out.width="90%"}
+plot(posterior)
+```
+
+# Normal
+
