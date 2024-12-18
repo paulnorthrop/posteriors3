@@ -27,6 +27,7 @@ random sample from one of the distributions.
 Draw a random sample from a Normal-Gamma distribution
 }
 \examples{
+library(distributions3)
 X <- NormalGamma(mu = 10, lambda = 1, shape = 5, rate = 1)
 random(X, 10)
 
