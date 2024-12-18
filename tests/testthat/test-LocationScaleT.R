@@ -22,7 +22,6 @@ test_that("LocationScaleT vs StudentsT: kurtosis", {
 })
 
 # pdf, log_pdf, cdf, quantile
-
 xvals <- c(-2:2)
 pvals <- c(0.05, 0.25, 0.5, 0.75, 0.95)
 test_that("LocationScaleT vs StudentsT: pdf", {
@@ -41,6 +40,7 @@ test_that("LocationScaleT vs StudentsT: quantile", {
 test_that("LocationScaleT vs StudentsT: quantile", {
   testthat::expect_equal(quantile(X, pvals), sigma * quantile(Y, pvals) + mu)
 })
+
 # random
 set.seed(42)
 randomX <- random(X, 5)
@@ -48,6 +48,9 @@ set.seed(42)
 randomY <- sigma * random(Y, 5) + mu
 test_that("LocationScaleT vs StudentsT: random", {
   testthat::expect_equal(randomX, randomY)
+})
+test_that("LocationScaleT vs StudentsT: random for n = 0", {
+  testthat::expect_equal(random(X, 0), numeric(0))
 })
 
 # support, is_continuous, is_discrete
@@ -61,3 +64,10 @@ test_that("LocationScaleT vs StudentsT: support", {
   testthat::expect_equal(is_discrete(X), FALSE)
 })
 
+# errors
+test_that("LocationScaleT: sigma < 0 throws an error", {
+  testthat::expect_error(LocationScaleT(sigma = -1))
+})
+test_that("LocationScaleT: df = 0 throws an error", {
+  testthat::expect_error(LocationScaleT(df = 0))
+})
