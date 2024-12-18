@@ -9,6 +9,8 @@
 #'   See [`Normal()`][distributions3::Normal()]. `lambda` must be positive.
 #' @param shape,rate  Shape and rate parameters of a Gamma distribution. See
 #'   [`Gamma()`][distributions3::Gamma()]. `shape` and `rate` must be positive.
+#' @param names A character vector of length 2. Names to be used for the
+#'   variables \eqn{X} and \eqn{Y}.
 #'
 #' @details See the Wikipedia page
 #'   [Normal-gamma distribution](https://en.wikipedia.org/wiki/Normal-gamma_distribution).
@@ -27,7 +29,8 @@
 #' Z <- NormalGamma()
 #' Z
 #' @export
-NormalGamma <- function(mu = 0, lambda = 1, shape = 1, rate = 1) {
+NormalGamma <- function(mu = 0, lambda = 1, shape = 1, rate = 1,
+                        names = c("X", "Y")) {
 
   if (any(lambda <= 0)) {
     stop("lambda must be positive")
@@ -44,7 +47,7 @@ NormalGamma <- function(mu = 0, lambda = 1, shape = 1, rate = 1) {
 
   d <- data.frame(mu = mu, lambda = lambda, shape = shape, rate = rate)
   attr(d, "parameter_names") <- c("mu", "lambda", "shape", "rate")
-  attr(d, "variable_names") <- c("X", "Y")
+  attr(d, "variable_names") <- names
   class(d) <- c("NormalGamma", "distribution")
   return(d)
 }

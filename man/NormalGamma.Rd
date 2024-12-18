@@ -4,7 +4,7 @@
 \alias{NormalGamma}
 \title{Create a Normal-Gamma distribution}
 \usage{
-NormalGamma(mu = 0, lambda = 1, shape = 1, rate = 1)
+NormalGamma(mu = 0, lambda = 1, shape = 1, rate = 1, names = c("X", "Y"))
 }
 \arguments{
 \item{mu, lambda}{Parameters \eqn{\mu} (location) and \eqn{\lambda}
@@ -13,6 +13,9 @@ See \code{\link[distributions3:Normal]{Normal()}}. \code{lambda} must be positiv
 
 \item{shape, rate}{Shape and rate parameters of a Gamma distribution. See
 \code{\link[distributions3:Gamma]{Gamma()}}. \code{shape} and \code{rate} must be positive.}
+
+\item{names}{A character vector of length 2. Names to be used for the
+variables \eqn{X} and \eqn{Y}.}
 }
 \value{
 A \code{NormalGamma} object, inheriting from class \code{"distribution"}.
