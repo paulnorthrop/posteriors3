@@ -78,6 +78,9 @@ add_data <- function(d, data) {
     # Use t() so that the matrix has nvars columns
     data <- as.list(as.data.frame(t(data)))
   } else if (is.numeric(data)) {
+    if (length(d) != 1) {
+      stop("If length(d) > 1 then 'data' must be a matrix, data frame or list")
+    }
     data <- list(data)
   } else {
     stop("'data' is not of an appropriate type")
