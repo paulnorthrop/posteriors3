@@ -1,9 +1,21 @@
 # Check that the likelihood object d has appropriate data as an attribute
 
+# 1 Binomial distribution
+
+d1 <- Binomial(size = 10)
+
+data <- list(c(1:2, 1:3))
+d_correct <- add_data(d1, data)
+test_that("1 Binomial, using add_data() does not throw an error)", {
+  testthat::expect_no_error(check_data(d_correct))
+})
+
+# 2 Binomial distributions
+
 d2 <- Binomial(size = c(5, 10))
 
 test_that("likelihood object with no data throws an error", {
-  testthat::expect_error(check_data(d))
+  testthat::expect_error(check_data(d2))
 })
 
 attr(d2, "data") <- 1:10
