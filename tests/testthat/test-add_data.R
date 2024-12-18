@@ -23,6 +23,13 @@ test_that("add_data(): character data throws an error", {
 })
 
 numeric_data <- 1:3
-test_that("add_data(): numeric data does not throw an error", {
-  testthat::expect_no_error(add_data(d2, numeric_data))
+test_that("add_data(): numeric data throws error if length(d) > 1", {
+  testthat::expect_error(add_data(d2, numeric_data))
+})
+
+# Numeric data are fine if length(d) = 1
+d1 <- Binomial(size = 5)
+numeric_data <- 1:3
+test_that("add_data(): numeric data does not throw an error if length(d) = 1", {
+  testthat::expect_no_error(add_data(d1, numeric_data))
 })
