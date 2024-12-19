@@ -5,15 +5,16 @@
 \alias{marginals.NormalGamma}
 \title{Extract marginal distributions}
 \usage{
-marginals(d, ...)
+marginals(d, names = NULL)
 
-\method{marginals}{NormalGamma}(d, ...)
+\method{marginals}{NormalGamma}(d, names = c("mu", "tau"))
 }
 \arguments{
 \item{d}{A probability distribution object inheriting from class
 \code{"distribution"} such as those created by a call to \code{\link[=NormalGamma]{NormalGamma()}}.}
 
-\item{...}{Not used.}
+\item{names}{A character vector. Names to be used for the individual
+variables in the multivariate disribution.}
 }
 \value{
 A list with \code{length(d)} components. Each component is a univariate
@@ -25,4 +26,9 @@ from class \code{"distribution"}.
 }
 \details{
 Additional details...
+}
+\examples{
+X <- NormalGamma(names = c("mu", "tau"))
+marginals(X)
+
 }
