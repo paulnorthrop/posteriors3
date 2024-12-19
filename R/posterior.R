@@ -109,9 +109,9 @@
 #' # Add the data, a numeric vector
 #' likelihood <- add_data(X, data)
 #'
-#' # Set a Normal-Gamma prior for (mean, precision)
+#' # Set a Normal-Gamma prior for (mean mu, precision tau)
 #'
-#' prior <- NormalGamma(names = c("mean", "precision"))
+#' prior <- NormalGamma(names = c("mu", "tau"))
 #' posterior <- likelihood * prior
 #' posterior
 #' # Find the marginal posterior distributions for mean and precision
