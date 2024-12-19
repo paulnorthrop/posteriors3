@@ -38,8 +38,6 @@ posterior.Normal <- function(x, y) {
   attr(z, "prior") <- y
   # Add the likelihood as an attribute for later use
   attr(z, "likelihood") <- x
-  # Store the names of the parameters of interest
-  attr(z, "variable_name") <- c("mu", "tau")
   # Add "posterior" as the second component of the class
   class(z) <- c(class(z)[1], "posterior", class(z)[2])
   return(z)
