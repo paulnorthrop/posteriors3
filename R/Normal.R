@@ -31,6 +31,15 @@ posterior.Normal <- function(x, y) {
     z <- NormalGamma(mu = posterior_mu, lambda = posterior_lambda,
                      shape = posterior_shape, rate = posterior_rate,
                      names = attr(y, "variable_names"))
+    # Add attributes containing the marginal posterior and prior for each of
+    # the variables
+    variables <- attr(y, "variable_names")
+    # Posterior distributions
+    attr(z, paste0("posterior for ", variables[1])) <- marginals(z)[1]
+    attr(z, paste0("posterior for ", variables[2])) <- marginals(z)[2]
+    # Prior distributions
+    attr(z, paste0("prior for ", variables[1])) <- marginals(y)[1]
+    attr(z, paste0("prior for ", variables[2])) <- marginals(y)[2]
   } else {
     stop("A conjugate prior must be used for Normal data")
   }
