@@ -46,7 +46,6 @@ NormalGamma <- function(mu = 0, lambda = 1, shape = 1, rate = 1,
   )
 
   d <- data.frame(mu = mu, lambda = lambda, shape = shape, rate = rate)
-  attr(d, "parameter_names") <- c("mu", "lambda", "shape", "rate")
   attr(d, "variable_names") <- names
   class(d) <- c("NormalGamma", "distribution")
   return(d)

@@ -60,7 +60,6 @@ LocationScaleT <- function(mu = 0, sigma = 1, df) {
   )
 
   d <- data.frame(mu = mu, sigma = sigma, df = df)
-  attr(d, "parameter_names") <- c("mu", "sigma", "df")
   class(d) <- c("LocationScaleT", "distribution")
   return(d)
 }
