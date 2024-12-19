@@ -115,7 +115,7 @@ plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
   }
   # Set x and y axis labels, based on the name of the parameter
   # We include the discrete case, but this probably will not be used
-  variable_name <- attr(x, "parameter")
+  variable_name <- attr(x, "variable_name")
   my_xlab <- variable_name
   if (cdf) {
     my_ylab <- paste0("F(", my_xlab, ")")
