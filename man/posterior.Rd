@@ -131,8 +131,16 @@ likelihood <- add_data(X, data)
 prior <- NormalGamma(names = c("mu", "tau"))
 posterior <- likelihood * prior
 posterior
+
+# Plot the marginal prior and posterior distributions for mu and tau
+plot(posterior, margin = "mu")
+plot(posterior, margin = "tau")
+
 # Find the marginal posterior distributions for mean and precision
-marginals(posterior)
+x <- marginals(posterior)
+# plot the marginal posterior distributions individually
+plot(x[[1]])
+plot(x[[2]])
 
 # plot(posterior)
 }
