@@ -92,7 +92,6 @@ plot.posterior <- function(x, prior = TRUE, margin = NULL, cdf = FALSE,
     }
     # Extract the required posterior distribution(s)
     posterior_x <- attr(x, posterior_variable)[[1]]
-    print(class(posterior_x))
     # How many posterior distributions are included in x?
     n_posteriors <- length(x)
     # If required, add the corresponding prior distributions(s)
