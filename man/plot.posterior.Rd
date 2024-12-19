@@ -11,6 +11,7 @@
   p = c(0.1, 99.9),
   len = 1000,
   legend_args = list(),
+  digits = 3,
   ...
 )
 }
@@ -42,6 +43,10 @@ smoother is the curve.}
 position of the legend.  If \code{legend_args$x} is not supplied then
 \code{"bottomright"} is used if \code{cdf = TRUE} and \code{"topright"} if
 \code{cdf = FALSE}.}
+
+\item{digits}{The number of significant digits to be used in values of
+parameters displayed in the title or legend.
+See \code{\link[base:Round]{signif()}}.}
 
 \item{...}{Further arguments to be passed to \code{\link[graphics:plot.default]{plot()}},
 \code{\link[stats:ecdf]{ecdf()}} and \code{\link[graphics:lines]{lines()}},

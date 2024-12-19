@@ -26,6 +26,9 @@
 #'   position of the legend.  If `legend_args$x` is not supplied then
 #'   `"bottomright"` is used if `cdf = TRUE` and `"topright"` if
 #'   `cdf = FALSE`.
+#' @param digits The number of significant digits to be used in values of
+#'   parameters displayed in the title or legend.
+#'   See [`signif()`][base::signif].
 #' @param ...  Further arguments to be passed to [`plot()`][graphics::plot()],
 #'   [`ecdf()`][stats::ecdf] and [`lines()`][graphics::lines()],
 #'   such as `xlim`, `ylim`, `xlab`, `ylab`, `main`, `lwd`, `lty`, `col`, `pch`.
@@ -48,7 +51,7 @@
 #' See the examples in [`posterior`].
 #' @export
 plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
-                           len = 1000, legend_args = list(), ...) {
+                           len = 1000, legend_args = list(), digits = 3, ...) {
   if (!distributions3::is_distribution(x)) {
     stop("use only with \"distribution\" objects")
   }
@@ -77,12 +80,14 @@ plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
     my_main <- paste0(my_main, par_names[np], ")")
   } else {
     my_main <- paste0(distn, " (")
+    # Round the parameter values to digits significant digits
     if (np > 1) {
       for (i in 1:(np - 1)) {
-        my_main <- paste0(my_main, as.matrix(x)[i], ", ")
+        my_main <- paste0(my_main, signif(as.matrix(x)[i], digits = digits),
+                          ", ")
       }
     }
-    my_main <- paste0(my_main, as.matrix(x)[np], ")")
+    my_main <- paste0(my_main, signif(as.matrix(x)[np], digits = digits), ")")
   }
   if (cdf) {
     my_main <- paste(my_main, "c.d.f.")
@@ -122,6 +127,8 @@ plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
     leg_text <- numeric(n_distns)
     for (i in 1:n_distns) {
       text_i <- lapply(x, "[[", i)
+      # Round the parameter values to digits significant digits
+      text_i <- lapply(text_i, signif, digits = digits)
       leg_text[i] <- paste0(text_i, collapse = ", ")
     }
     return(leg_text)
