@@ -9,6 +9,9 @@
 #' @param prior A logical scalar. If `prior = TRUE` then include all
 #'   the prior distributions in the plot. Otherwise, plot only the posterior
 #'   distributions.
+#' @param margin A numeric or character scalar giving the number or the name
+#'   of the marginal variable. `attr(x, "variable_names")` can be used to view
+#'   the names of the variables.
 #' @param cdf A logical scalar.  If `cdf = TRUE` then the cumulative
 #'   distribution function (c.d.f.) is plotted.  Otherwise, the probability
 #'   density function (p.d.f.), for a continuous variable, or the probability
@@ -50,16 +53,61 @@
 #' @section Examples:
 #' See the examples in [`posterior`].
 #' @export
-plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
-                           len = 1000, legend_args = list(), digits = 3, ...) {
+plot.posterior <- function(x, prior = TRUE, margin = NULL, cdf = FALSE,
+                           p = c(0.1, 99.9), len = 1000, legend_args = list(),
+                           digits = 3, ...) {
   if (!distributions3::is_distribution(x)) {
     stop("use only with \"distribution\" objects")
   }
-  # How many posterior distributions are included in x?
-  n_posteriors <- length(x)
-  # To add the prior distribution(s) extract them from attr(x, "prior")
-  if (prior) {
-    x <- c(x, attr(x, "prior"))
+  # If marginal is non-NULL then attempt to extract from x a distribution
+  # object relating to the required marginal posterior, and perhaps prior,
+  # distributions
+  if (!is.null(margin)) {
+    marginal_variable_names <- attr(x, "variable_names")
+    number_of_margins <- length(marginal_variable_names)
+    if (number_of_margins == 1) {
+      stop("'margin' is not relevant for a 1-dimensional posterior")
+    }
+    if (!is.numeric(margin) & !is.character(margin)) {
+      stop("'margin' mus be numeric or character")
+    }
+    if (is.numeric(margin) & !is.element(margin, 1:number_of_margins)) {
+      stop("'margin' must be in ", "1:", number_of_margins)
+    }
+    if (is.character(margin) & !is.element(margin, marginal_variable_names)) {
+      stop_text <- paste0(marginal_variable_names, collapse = ", ")
+      stop("'margin' must be in {", stop_text, "}")
+    }
+    if (is.numeric(margin)) {
+      posterior_variable <- paste0("posterior for ",
+                                   marginal_variable_names[margin])
+      prior_variable <- paste0("prior for ",
+                               marginal_variable_names[margin])
+      variable_name <- marginal_variable_names[margin]
+    }
+    if (is.character(margin)) {
+      posterior_variable <- paste0("posterior for ", margin)
+      prior_variable <- paste0("prior for ", margin)
+      variable_name <- margin
+    }
+    # Extract the required posterior distribution(s)
+    posterior_x <- attr(x, posterior_variable)[[1]]
+    print(class(posterior_x))
+    # How many posterior distributions are included in x?
+    n_posteriors <- length(x)
+    # If required, add the corresponding prior distributions(s)
+    if (prior) {
+      prior_x <- attr(x, prior_variable)[[1]]
+      x <- c(posterior_x, prior_x)
+    }
+  } else {
+    # How many posterior distributions are included in x?
+    n_posteriors <- length(x)
+    # To add the prior distribution(s) extract them from attr(x, "prior")
+    if (prior) {
+      x <- c(x, attr(x, "prior"))
+    }
+    variable_name <- attr(x, "variable_names")
   }
   # Extract the name of the distribution
   distn <- class(x)[1]
@@ -115,7 +163,7 @@ plot.posterior <- function(x, prior = TRUE, cdf = FALSE, p = c(0.1, 99.9),
   }
   # Set x and y axis labels, based on the name of the parameter
   # We include the discrete case, but this probably will not be used
-  variable_name <- attr(x, "variable_names")
+#  variable_name <- attr(x, "variable_names")
   my_xlab <- variable_name
   if (cdf) {
     my_ylab <- paste0("F(", my_xlab, ")")

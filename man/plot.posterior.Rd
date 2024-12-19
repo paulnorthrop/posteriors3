@@ -7,6 +7,7 @@
 \method{plot}{posterior}(
   x,
   prior = TRUE,
+  margin = NULL,
   cdf = FALSE,
   p = c(0.1, 99.9),
   len = 1000,
@@ -22,6 +23,10 @@
 \item{prior}{A logical scalar. If \code{prior = TRUE} then include all
 the prior distributions in the plot. Otherwise, plot only the posterior
 distributions.}
+
+\item{margin}{A numeric or character scalar giving the number or the name
+of the marginal variable. \code{attr(x, "variable_names")} can be used to view
+the names of the variables.}
 
 \item{cdf}{A logical scalar.  If \code{cdf = TRUE} then the cumulative
 distribution function (c.d.f.) is plotted.  Otherwise, the probability
