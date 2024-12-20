@@ -1,8 +1,6 @@
 # Check that the posterior() method works for the Binomial case with a
 # conjugate Beta prior
 
-library(distributions3)
-
 # One Binomial distribution, 1 prior
 
 # Note: the value of p is irrelevant here

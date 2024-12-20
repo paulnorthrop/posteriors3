@@ -8,5 +8,6 @@
 
 library(testthat)
 library(posteriors3)
+library(distributions3)
 
 test_check("posteriors3")

@@ -1,7 +1,6 @@
 # Check that the methods for the "LocationScaleT" class are consistent with
 # those for the "StudentsT" class in the distributions3 package
 
-library(distributions3)
 mu <- 10
 sigma <- 2
 X <- LocationScaleT(mu = mu, sigma = sigma, df = 6)

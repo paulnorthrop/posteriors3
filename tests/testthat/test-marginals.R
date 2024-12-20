@@ -1,7 +1,5 @@
 # Check that the marginals() method works for the NormalGamma case
 
-library(distributions3)
-
 mu <- 0
 lambda <- 1
 shape <- 1

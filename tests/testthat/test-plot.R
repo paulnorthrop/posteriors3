@@ -1,7 +1,5 @@
 # Check the object returned from the plot() method
 
-library(distributions3)
-
 # One Binomial distribution, 1 prior
 
 # Note: the value of p is irrelevant here
