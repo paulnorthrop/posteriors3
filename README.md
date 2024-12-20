@@ -62,7 +62,8 @@ prior
 posterior <- likelihood * prior
 #> Posterior: Binomial likelihood, Beta prior
 posterior
-#> [1] "Beta(alpha = 5.5, beta = 45.5)"
+#>                                p 
+#> "Beta(alpha = 5.5, beta = 45.5)"
 ```
 
 This agrees with the result that the posterior is a Beta distribution
