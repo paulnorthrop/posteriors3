@@ -59,7 +59,7 @@ test_that("LocationScaleT vs StudentsT: support", {
 test_that("LocationScaleT: is_continuous", {
   testthat::expect_equal(is_continuous(X), TRUE)
 })
-test_that("LocationScaleT: support", {
+test_that("LocationScaleT: is_discrete", {
   testthat::expect_equal(is_discrete(X), FALSE)
 })
 

@@ -123,6 +123,9 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #' pdf(X, matrix(c(0, 0), ncol = 2))
 #' @export
 pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+  if (!is.matrix(x) | dim(x)[2] != 2) {
+    stop("'x' must be a numeric matrix with 2 columns")
+  }
   y <- x[, 2]
   x <- x[, 1]
   FUN <- function(i, x, y, d) {
@@ -148,6 +151,9 @@ pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
 #' @rdname pdf.NormalGamma
 #' @export
 log_pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+  if (!is.matrix(x) | dim(x)[2] != 2) {
+    stop("'x' must be a numeric matrix with 2 columns")
+  }
   y <- x[, 2]
   x <- x[, 1]
   FUN <- function(i, x, y, d) {
@@ -193,11 +199,13 @@ support.NormalGamma <- function(d, drop = TRUE, ...) {
 #' @exportS3Method
 is_discrete.NormalGamma <- function(d, ...) {
   rlang::check_dots_used()
-  return(rep.int(FALSE, length(d)), names(d))
+  return(stats::setNames(rep.int(FALSE, length(d)), names(d)))
+#  return(rep.int(FALSE, length(d)), names(d))
 }
 
 #' @exportS3Method
 is_continuous.NormalGamma <- function(d, ...) {
   rlang::check_dots_used()
-  return(rep.int(TRUE, length(d)), names(d))
+  return(stats::setNames(rep.int(TRUE, length(d)), names(d)))
+#  return(rep.int(TRUE, length(d)), names(d))
 }
