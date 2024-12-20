@@ -199,13 +199,11 @@ support.NormalGamma <- function(d, drop = TRUE, ...) {
 #' @exportS3Method
 is_discrete.NormalGamma <- function(d, ...) {
   rlang::check_dots_used()
-  return(stats::setNames(rep.int(FALSE, length(d)), names(d)))
-#  return(rep.int(FALSE, length(d)), names(d))
+  return(rep.int(FALSE, length(d)))
 }
 
 #' @exportS3Method
 is_continuous.NormalGamma <- function(d, ...) {
   rlang::check_dots_used()
-  return(stats::setNames(rep.int(TRUE, length(d)), names(d)))
-#  return(rep.int(TRUE, length(d)), names(d))
+  return(rep.int(TRUE, length(d)))
 }
