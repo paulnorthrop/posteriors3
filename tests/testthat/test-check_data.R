@@ -7,7 +7,7 @@ d1 <- Binomial(size = 10)
 data <- list(c(1:2, 1:3))
 d_correct <- add_data(d1, data)
 test_that("1 Binomial, using add_data() does not throw an error)", {
-  testthat::expect_no_error(check_data(d_correct))
+  testthat::expect_equal(attr(check_data(d_correct), "data"), data)
 })
 
 # 2 Binomial distributions
@@ -31,7 +31,7 @@ test_that("likelihood object with list data of the wrong length throws an error"
 data <- list(1:2, 1:3)
 d_correct <- add_data(d2, data)
 test_that("2 Binomials, using add_data() does not throw an error)", {
-  testthat::expect_no_error(check_data(d_correct))
+  testthat::expect_equal(attr(check_data(d_correct), "data"), data)
 })
 
 ## 3 Binomial distributions
@@ -43,7 +43,7 @@ d3 <- Binomial(size = c(5, 10, 20))
 data <- list(1:2, 1:3, 1:6)
 d_correct <- add_data(d3, data)
 test_that("3 Binomials, using add_data() does not throw an error)", {
-  testthat::expect_no_error(check_data(d_correct))
+  testthat::expect_equal(attr(check_data(d_correct), "data"), data)
 })
 
 # Check for data that is outside the range of the support

@@ -31,5 +31,6 @@ test_that("add_data(): numeric data throws error if length(d) > 1", {
 d1 <- Binomial(size = 5)
 numeric_data <- 1:3
 test_that("add_data(): numeric data does not throw an error if length(d) = 1", {
-  testthat::expect_no_error(add_data(d1, numeric_data))
+  testthat::expect_equal(attr(add_data(d1, numeric_data), "data")[[1]],
+                         numeric_data)
 })
