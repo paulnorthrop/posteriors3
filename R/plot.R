@@ -62,9 +62,9 @@ plot.posterior <- function(x, prior = TRUE, margin = NULL, cdf = FALSE,
   # If marginal is non-NULL then attempt to extract from x a distribution
   # object relating to the required marginal posterior, and perhaps prior,
   # distributions
+  marginal_variable_names <- attr(x, "variable_names")
+  number_of_margins <- length(marginal_variable_names)
   if (!is.null(margin)) {
-    marginal_variable_names <- attr(x, "variable_names")
-    number_of_margins <- length(marginal_variable_names)
     if (number_of_margins == 1) {
       stop("'margin' is not relevant for a 1-dimensional posterior")
     }
