@@ -122,12 +122,10 @@ X <- Normal(mu = 10, sigma = 2)
 # Simulate a sample of size 15 from a Normal(10, 2^2) distribution
 set.seed(3)
 data <- random(X, 15)
-
 # Add the data, a numeric vector
 likelihood <- add_data(X, data)
 
 # Set a Normal-Gamma prior for (mean mu, precision tau)
-
 prior <- NormalGamma(names = c("mu", "tau"))
 posterior <- likelihood * prior
 posterior
