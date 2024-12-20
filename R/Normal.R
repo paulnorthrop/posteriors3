@@ -25,8 +25,8 @@ posterior.Normal <- function(x, y) {
     posterior_mu <- (nu * mu0 + n * mean(data)) / (nu + n)
     posterior_lambda <- nu + n
     posterior_shape <- alpha + n / 2
-    posterior_rate <- beta + (n - 1) * stats::var(data) / 2 +
-      (n * nu) * (mean(x) - mu0) ^ 2 / (2 * (nu + n))
+    posterior_rate <- beta + (n - 1) * ifelse(n == 1, 0, stats::var(data)) / 2 +
+      (n * nu) * (mean(data) - mu0) ^ 2 / (2 * (nu + n))
     # Return the posterior as a "distribution" object
     z <- NormalGamma(mu = posterior_mu, lambda = posterior_lambda,
                      shape = posterior_shape, rate = posterior_rate,
