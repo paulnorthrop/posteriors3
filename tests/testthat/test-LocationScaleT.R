@@ -48,7 +48,7 @@ randomY <- sigma * random(Y, 5) + mu
 test_that("LocationScaleT vs StudentsT: random", {
   testthat::expect_equal(randomX, randomY)
 })
-test_that("LocationScaleT vs StudentsT: random for n = 0", {
+test_that("LocationScaleT: random for n = 0", {
   testthat::expect_equal(random(X, 0), numeric(0))
 })
 
@@ -56,10 +56,10 @@ test_that("LocationScaleT vs StudentsT: random for n = 0", {
 test_that("LocationScaleT vs StudentsT: support", {
   testthat::expect_equal(support(X), c(min = -Inf, max = Inf))
 })
-test_that("LocationScaleT vs StudentsT: is_continuous", {
+test_that("LocationScaleT: is_continuous", {
   testthat::expect_equal(is_continuous(X), TRUE)
 })
-test_that("LocationScaleT vs StudentsT: support", {
+test_that("LocationScaleT: support", {
   testthat::expect_equal(is_discrete(X), FALSE)
 })
 
