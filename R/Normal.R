@@ -48,9 +48,14 @@ posterior.Normal <- function(x, y) {
   # Add the prior(s) as an attribute for later use
   attr(z, "prior") <- y
   # Add the likelihood as an attribute for later use
-  attr(z, "likelihood") <- NormalGamma(mu = sample_mean, lambda = n,
-                                       shape = (n + 1) / 2,
-                                       rate = (n - 1) * sample_variance / 2)
+  # Exclude the degenerate cases where rate = 0
+  if (sample_variance > 0) {
+    attr(z, "likelihood") <- NormalGamma(mu = sample_mean, lambda = n,
+                                         shape = (n + 1) / 2,
+                                         rate = (n - 1) * sample_variance / 2)
+  } else {
+    attr(x, "likelihood") <- NA
+  }
   # Add "posterior" as the second component of the class
   class(z) <- c(class(z)[1], "posterior", class(z)[2])
   return(z)
