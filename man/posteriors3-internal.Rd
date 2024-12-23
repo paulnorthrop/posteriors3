@@ -4,11 +4,14 @@
 \alias{posteriors3-internal}
 \alias{check_data}
 \alias{is.wholenumber}
+\alias{plot_distribution_contours}
 \title{Internal posteriors3 functions}
 \usage{
 check_data(x)
 
 is.wholenumber(x, tol = .Machine$double.eps^0.5)
+
+plot_distribution_contours(x, prior, names, len, p, legend_args, digits, ...)
 }
 \description{
 Internal posteriors3 functions
