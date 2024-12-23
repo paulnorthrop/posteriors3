@@ -26,8 +26,8 @@ posterior.Binomial <- function(x, y) {
   }
   # Add the prior(s) as an attribute for later use
   attr(z, "prior") <- y
-  # Add the likelihood as an attribute for later use
-  attr(z, "likelihood") <- x
+  # Add the likelihood function as an attribute for later use
+  attr(z, "likelihood") <- Beta(alpha = sum_data, beta = sum_size_minus_data)
   # Store the name of the parameter of interest
   attr(z, "variable_names") <- "p"
   # Add "posterior" as the second component of the class
