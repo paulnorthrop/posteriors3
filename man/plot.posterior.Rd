@@ -21,9 +21,11 @@
 \item{x}{an object of class \code{c("name", "distribution")}, where
 \code{"name"} is the name of the distribution.}
 
-\item{prior}{A logical scalar. If \code{prior = TRUE} then include all
-the prior distributions in the plot. Otherwise, plot only the posterior
-distributions.}
+\item{prior}{A logical scalar. If \code{prior = TRUE} then add all prior
+distributions to the plot. Otherwise, add no prior distributions.}
+
+\item{likelihood}{A logical scalar. If \code{likelihood = TRUE} then add all
+likelihood functions to the plot. Otherwise, add no likelihoods.}
 
 \item{margin}{A numeric or character scalar giving the number or the name
 of the marginal variable. \code{attr(x, "variable_names")} can be used to view

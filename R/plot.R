@@ -7,9 +7,10 @@
 #'
 #' @param x an object of class `c("name", "distribution")`, where
 #'   `"name"` is the name of the distribution.
-#' @param prior A logical scalar. If `prior = TRUE` then include all
-#'   the prior distributions in the plot. Otherwise, plot only the posterior
-#'   distributions.
+#' @param prior A logical scalar. If `prior = TRUE` then add all prior
+#'   distributions to the plot. Otherwise, add no prior distributions.
+#' @param likelihood A logical scalar. If `likelihood = TRUE` then add all
+#'   likelihood functions to the plot. Otherwise, add no likelihoods.
 #' @param margin A numeric or character scalar giving the number or the name
 #'   of the marginal variable. `attr(x, "variable_names")` can be used to view
 #'   the names of the variables.
