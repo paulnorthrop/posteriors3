@@ -70,8 +70,6 @@ is.wholenumber <- function(x, tol = .Machine$double.eps ^ 0.5) {
   return(abs(x - round(x)) < tol)
 }
 
-# Need to pick a (prior, posterior) combination
-
 #' @keywords internal
 #' @rdname posteriors3-internal
 plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
