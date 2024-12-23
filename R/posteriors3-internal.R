@@ -220,6 +220,8 @@ plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
   }
   if (!is.null(dots_args$lwd)) {
     lwd_vec <- dots_args$lwd
+  } else {
+    lwd_vec <- my_lwd
   }
   MoreArgs <- c(list(distn_objects = x), save_dots_args)
   mapply(FUN = plot_contour, which_distn = 1:n_distns, add = add_vec,
