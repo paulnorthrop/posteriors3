@@ -123,7 +123,8 @@
 #' plot(x[[1]])
 #' plot(x[[2]])
 #'
-#' # plot(posterior)
+#' # Contour plots of posterior and prior distributions
+#' plot(posterior)
 #' @name posterior
 NULL
 ## NULL

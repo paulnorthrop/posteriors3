@@ -140,7 +140,8 @@ x <- marginals(posterior)
 plot(x[[1]])
 plot(x[[2]])
 
-# plot(posterior)
+# Contour plots of posterior and prior distributions
+plot(posterior)
 }
 \seealso{
 \code{\link[=add_data]{add_data()}} for adding data to a \code{"distribution"} object.
