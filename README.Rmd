@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 ## Univariate Bayesian Analyses using S3 Probability Distribution Objects
 
-Provides functions to perform univariate Bayesian analyses using the S3 probability distribution objects provided by the [distributions3](https://cran.r-project.org/package=distributions3) package. A multiplication generic function is provided so that a posterior distribution object can be created from a product of a likelihood object and a prior distribution object. If a conjugate prior is used then the posterior distribution object is also an S3 probability distribution object. 
+Provides functions to perform univariate Bayesian analyses using the S3 probability distribution objects provided by the [distributions3](https://cran.r-project.org/package=distributions3) package. A multiplication generic function is provided so that a posterior distribution object can be created from a product of a likelihood object and a prior distribution object. If a conjugate prior is used then the posterior distribution object is also an S3 probability distribution object, with a distribution of the same type as the prior object. 
 
 ## An example
 

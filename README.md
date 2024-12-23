@@ -23,7 +23,8 @@ package. A multiplication generic function is provided so that a
 posterior distribution object can be created from a product of a
 likelihood object and a prior distribution object. If a conjugate prior
 is used then the posterior distribution object is also an S3 probability
-distribution object.
+distribution object, with a distribution of the same type as the prior
+object.
 
 ## An example
 
