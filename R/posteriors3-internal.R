@@ -235,7 +235,7 @@ plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
   }
   MoreArgs <- c(list(distn_objects = x), save_dots_args)
   lty_vec <- lty_vec[1:n_distns]
-  col_vec <- col_vec[1:n_distns]
+  col_vec <- rep_len(col_vec, n_distns)
   mapply(FUN = plot_contour, which_distn = 1:n_distns, add = add_vec,
          lty = lty_vec, col = col_vec, MoreArgs = MoreArgs)
   # If n_distns > 1 then add a legend
@@ -251,8 +251,6 @@ plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
     zeros <- length(legend_args[["legend"]]) - length(legend_args[["col"]])
     legend_args[["col"]] <- c(legend_args[["col"]], rep(0, zeros))
     legend_args[["lty"]] <- c(legend_args[["lty"]], rep(0, zeros))
-#    legend_args[["title"]] <- NULL
-#    print(legend_args)
     do.call(graphics::legend, legend_args)
   }
   return(invisible())
