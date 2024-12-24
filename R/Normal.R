@@ -53,6 +53,10 @@ posterior.Normal <- function(x, y) {
     attr(z, "likelihood") <- NormalGamma(mu = sample_mean, lambda = n,
                                          shape = (n + 1) / 2,
                                          rate = (n - 1) * sample_variance / 2)
+    attr(z, paste0("likelihood for ", variables[1])) <-
+      marginals(attr(z, "likelihood"))[1]
+    attr(z, paste0("likelihood for ", variables[2])) <-
+      marginals(attr(z, "likelihood"))[2]
   } else {
     attr(x, "likelihood") <- NA
   }
