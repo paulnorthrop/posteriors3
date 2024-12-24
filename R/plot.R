@@ -182,6 +182,11 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
   }
   # Extract user-supplied arguments for graphics::plot()
   user_args <- list(...)
+  if (!is.null(user_args$lwd)) {
+    my_lwd <- user_args$lwd
+  } else {
+    my_lwd <- 2
+  }
   # If xlim is supplied then use it.
   # Otherwise, use default values (but no -Inf or Inf)
   if (is.null(user_args[["xlim"]])) {
@@ -249,5 +254,20 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
   my_lty <- lty_col$my_lty
   my_col <- lty_col$my_col
   continuous_plot(x, xvals, ...)
+  if (likelihood) {
+    likelihood_legend_pos <- switch(legend_args[["x"]],
+                                    bottomright = "bottomleft",
+                                    bottom = "bottomleft",
+                                    bottomleft = "bottomright",
+                                    left = "right",
+                                    topleft = "topright",
+                                    top = "topleft",
+                                    topright = "topleft",
+                                    right = "left",
+                                    center = "left")
+    graphics::legend(x = likelihood_legend_pos, legend = "likelihood",
+                     lty = 3, col = ifelse(n_posteriors > 1, 8, 1),
+                     lwd = my_lwd)
+  }
   return(invisible(x))
 }

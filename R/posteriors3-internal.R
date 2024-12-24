@@ -234,7 +234,7 @@ plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
     lwd_vec <- my_lwd
   }
   MoreArgs <- c(list(distn_objects = x), save_dots_args)
-  lty_vec <- lty_vec[1:n_distns]
+  lty_vec <- rep_len(lty_vec, n_distns)
   col_vec <- rep_len(col_vec, n_distns)
   mapply(FUN = plot_contour, which_distn = 1:n_distns, add = add_vec,
          lty = lty_vec, col = col_vec, MoreArgs = MoreArgs)
@@ -286,7 +286,7 @@ set_lty_col <- function(prior, likelihood, n_posteriors) {
       my_col[to_remove] <- 0
     } else {
       my_lty <- c(1, 3)
-      my_col <- 1
+      my_col <- rep(1, 2)
     }
   } else if (prior & likelihood) {
     if (n_posteriors > 1) {
@@ -297,7 +297,7 @@ set_lty_col <- function(prior, likelihood, n_posteriors) {
       my_col[to_remove] <- 0
     } else {
       my_lty <- 1:3
-      my_col <- 1
+      my_col <- rep(1, 3)
     }
   } else {
     my_lty <- 1
@@ -359,6 +359,20 @@ set_legend <- function(x, prior, likelihood, legend_args, n_distns,
     if (likelihood) {
       legend_args$ncol <- legend_args$ncol + 1
     }
+  }
+  # Remove the likelihood parts of the legend
+  if (likelihood) {
+    to_remove <- (length(legend_args$legend) - n_posteriors +1):
+                   length(legend_args$legend)
+    legend_args$legend <- legend_args$legend[-to_remove]
+    if (prior) {
+      legend_args$title <- paste("posterior", "prior", sep = "        ")
+    } else {
+      legend_args$title <- NULL
+    }
+    legend_args$col <- legend_args$col[-length(legend_args$col)]
+    legend_args$lty <- legend_args$lty[-length(legend_args$lty)]
+    legend_args$ncol <- legend_args$ncol - 1
   }
   return(legend_args)
 }
