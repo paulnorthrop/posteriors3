@@ -133,7 +133,7 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
     if (missing(p)) {
       p <- c(5, 25, 50, 75, 95)
     }
-    plot_distribution_contours(x, prior = prior,
+    plot_distribution_contours(x, prior = prior, likelihood = likelihood,
                                names = marginal_variable_names, len = len,
                                p = p, legend_args = legend_args,
                                digits = digits, ...)
@@ -207,17 +207,6 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
   } else {
     my_ylab <- paste0("f(", my_xlab, ")")
   }
-  # Function to create the legend text
-  create_legend_text <- function(x, n_distns) {
-    leg_text <- numeric(n_distns)
-    for (i in 1:n_distns) {
-      text_i <- lapply(x, "[[", i)
-      # Round the parameter values to digits significant digits
-      text_i <- lapply(text_i, signif, digits = digits)
-      leg_text[i] <- paste0(text_i, collapse = ", ")
-    }
-    return(leg_text)
-  }
   # Plot function for continuous distributions with defaults
   continuous_plot <- function(x, xvals, ..., xlab = my_xlab, ylab = my_ylab,
                               main = my_main, lwd = 2, col = my_col,
@@ -237,45 +226,10 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
     }
     # If n_distns > 1 then add a legend
     if (n_distns > 1) {
-      if (is.null(legend_args[["legend"]])) {
-        legend_args$legend <- create_legend_text(x, n_distns)
-        if (!prior & likelihood) {
-          legend_args$legend <- c(legend_args$legend, rep("", n_posteriors - 1))
-        }
-        if (prior & likelihood) {
-          legend_args$legend <- c(legend_args$legend, rep("", n_posteriors - 1))
-        }
-      }
-      if (is.null(legend_args[["title"]])) {
-        if (prior & !likelihood) {
-          legend_args$title <- paste("posterior", "prior", sep = "        ")
-        } else if (!prior & likelihood) {
-          legend_args$title <- paste("posterior", "likelihood", sep = "        ")
-        } else if (prior & likelihood) {
-          legend_args$title <- paste("posterior", "prior", "likelihood",
-                                     sep = "        ")
-        } else {
-          legend_args$title <- NULL
-        }
-      }
-      if (is.null(legend_args[["col"]])) {
-        legend_args$col <- col
-      }
-      if (is.null(legend_args[["lwd"]])) {
-        legend_args$lwd <- lwd
-      }
-      if (is.null(legend_args[["lty"]])) {
-        legend_args$lty <- lty
-      }
-      if (is.null(legend_args[["ncol"]])) {
-        legend_args$ncol <- 1
-        if (prior) {
-          legend_args$ncol <- legend_args$ncol + 1
-        }
-        if (likelihood) {
-          legend_args$ncol <- legend_args$ncol + 1
-        }
-      }
+      legend_args <- set_legend(x = x, prior = prior, likelihood = likelihood,
+                                legend_args = legend_args, n_distns = n_distns,
+                                n_posteriors = n_posteriors, digits = digits,
+                                col = col, lwd = lwd, lty = lty)
       do.call(graphics::legend, legend_args)
     }
     return(invisible())
@@ -290,35 +244,10 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
   }
   xvals <- seq(my_xlim[1], my_xlim[2], length.out = len)
   #
-  if (prior & !likelihood) {
-    my_lty <- rep(1:2, each = n_posteriors)
-    my_col <- rep(1:n_posteriors, times = n_posteriors)
-  } else if (!prior & likelihood) {
-    if (n_posteriors > 1) {
-      my_lty <- rep(c(1, 3), each = n_posteriors)
-      my_col <- c(1:n_posteriors, rep(8, n_posteriors))
-      to_remove <- (n_posteriors + 2):(2 * n_posteriors)
-      my_lty[to_remove] <- 0
-      my_col[to_remove] <- 0
-    } else {
-      my_lty <- c(1, 3)
-      my_col <- 1
-    }
-  } else if (prior & likelihood) {
-    if (n_posteriors > 1) {
-      my_lty <- rep(1:3, each = n_posteriors)
-      my_col <- c(rep(1:n_posteriors, times = 2), rep(8, n_posteriors))
-      to_remove <- (2 * (n_posteriors + 1)):(3 * n_posteriors)
-      my_lty[to_remove] <- 0
-      my_col[to_remove] <- 0
-    } else {
-      my_lty <- 1:3
-      my_col <- 1
-    }
-  } else {
-    my_lty <- 1
-    my_col <- 1:n_posteriors
-  }
+  lty_col <- set_lty_col(prior = prior, likelihood = likelihood,
+                         n_posteriors = n_posteriors)
+  my_lty <- lty_col$my_lty
+  my_col <- lty_col$my_col
   continuous_plot(x, xvals, ...)
   return(invisible(x))
 }

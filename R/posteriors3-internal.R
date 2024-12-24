@@ -72,23 +72,27 @@ is.wholenumber <- function(x, tol = .Machine$double.eps ^ 0.5) {
 
 #' @keywords internal
 #' @rdname posteriors3-internal
-plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
-                                       digits, ...) {
+plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
+                                       legend_args, digits, ...) {
   # Extract the the arguments passed in ...
   dots_args <- list(...)
   # Note: the prior distributions have already been added to x
   # Extract the marginal distributions
   posterior_variable <- paste0("posterior for ", names)
   prior_variable <- paste0("prior for ", names)
+  likelihood_variable <- paste0("likelihood for ", names)
   variable_name <- names
   # Find the number of posteriors (and priors)
   n_posteriors <- length(attr(x, posterior_variable[[1]])[[1]])
   # The total number of distributions (posteriors and priors)
   n_distns <- length(x)
   # Function to find the extreme quantiles of the marginals
-  quantile_function <- function(i, j, variable, probs, prior) {
+  quantile_function <- function(i, j, variable, probs, prior = FALSE,
+                                likelihood = FALSE) {
     if (prior) {
       y <- attr(x, prior_variable[[j]])[[1]][i]
+    } else if (likelihood) {
+      y <- attr(x, likelihood_variable[[j]])[[1]]
     } else {
       y <- attr(x, posterior_variable[[j]])[[1]][i]
     }
@@ -113,6 +117,11 @@ plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
                                     probs = prob_range, prior = TRUE))
       x_range <- range(x_range, x_prior_range)
     }
+    if (likelihood) {
+      x_likelihood_range <- range(sapply(1, quantile_function, j = 1,
+                                    probs = prob_range, likelihood = TRUE))
+      x_range <- range(x_range, x_likelihood_range)
+    }
   }
   if (!is.null(dots_args$ylim)) {
     y_range <- dots_args$ylim
@@ -123,6 +132,11 @@ plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
       y_prior_range <- range(sapply(1:n_posteriors, quantile_function, j = 2,
                                     probs = prob_range, prior = TRUE))
       y_range <- range(y_range, y_prior_range)
+    }
+    if (likelihood) {
+      y_likelihood_range <- range(sapply(1, quantile_function, j = 2,
+                                         probs = prob_range, likelihood = TRUE))
+      y_range <- range(y_range, y_likelihood_range)
     }
   }
   xx <- seq(x_range[1], x_range[2], length.out = 101)
@@ -196,12 +210,10 @@ plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
   }
   # Vectors for adding to first contour plot and line types and colours
   add_vec <- c(FALSE, rep(TRUE, n_distns - 1))
-  if (prior) {
-    lty_vec <- rep(1:2, each = n_posteriors)
-  } else {
-    lty_vec <- 1
-  }
-  col_vec <- 1:n_posteriors
+  lty_col <- set_lty_col(prior = prior, likelihood = likelihood,
+                         n_posteriors = n_posteriors)
+  lty_vec <- lty_col$my_lty
+  col_vec <- lty_col$my_col
   # Default graphics parameters
   my_xlab <- names[1]
   my_ylab <- names[2]
@@ -222,35 +234,118 @@ plot_distribution_contours <- function(x, prior, names, len, p, legend_args,
     lwd_vec <- my_lwd
   }
   MoreArgs <- c(list(distn_objects = x), save_dots_args)
+  lty_vec <- lty_vec[1:n_distns]
+  col_vec <- col_vec[1:n_distns]
   mapply(FUN = plot_contour, which_distn = 1:n_distns, add = add_vec,
          lty = lty_vec, col = col_vec, MoreArgs = MoreArgs)
   # If n_distns > 1 then add a legend
   if (n_distns > 1) {
-    legend_args$col <- col_vec
-    legend_args$lwd <- lwd_vec
-    legend_args$lty <- lty_vec
-    if (is.null(legend_args[["legend"]])) {
-      legend_args$legend <- create_legend_text(x, n_distns)
-    }
-    if (is.null(legend_args[["title"]])) {
-      if (prior) {
-        legend_args$title <- paste("posterior", "prior", sep = "        ")
-      } else {
-        legend_args$title <- NULL
-      }
-    }
-    if (is.null(legend_args[["ncol"]])) {
-      if (prior) {
-        legend_args$ncol <- 2
-      } else {
-        legend_args$ncol <- 1
-      }
-    }
+    legend_args <- set_legend(x = x, prior = prior, likelihood = likelihood,
+                              legend_args = legend_args, n_distns = n_distns,
+                              n_posteriors = n_posteriors, digits = digits,
+                              col = col_vec, lwd = lwd_vec, lty = lty_vec)
     # If legend$x hasn't been supplied then set defaults
     if (is.null(legend_args[["x"]])) {
       legend_args[["x"]] <- "topright"
     }
+    zeros <- length(legend_args[["legend"]]) - length(legend_args[["col"]])
+    legend_args[["col"]] <- c(legend_args[["col"]], rep(0, zeros))
+    legend_args[["lty"]] <- c(legend_args[["lty"]], rep(0, zeros))
+#    legend_args[["title"]] <- NULL
+#    print(legend_args)
     do.call(graphics::legend, legend_args)
   }
   return(invisible())
+}
+
+#' @keywords internal
+#' @rdname posteriors3-internal
+set_lty_col <- function(prior, likelihood, n_posteriors) {
+  if (prior & !likelihood) {
+    my_lty <- rep(1:2, each = n_posteriors)
+    my_col <- rep(1:n_posteriors, times = n_posteriors)
+  } else if (!prior & likelihood) {
+    if (n_posteriors > 1) {
+      my_lty <- rep(c(1, 3), each = n_posteriors)
+      my_col <- c(1:n_posteriors, rep(8, n_posteriors))
+      to_remove <- (n_posteriors + 2):(2 * n_posteriors)
+      my_lty[to_remove] <- 0
+      my_col[to_remove] <- 0
+    } else {
+      my_lty <- c(1, 3)
+      my_col <- 1
+    }
+  } else if (prior & likelihood) {
+    if (n_posteriors > 1) {
+      my_lty <- rep(1:3, each = n_posteriors)
+      my_col <- c(rep(1:n_posteriors, times = 2), rep(8, n_posteriors))
+      to_remove <- (2 * (n_posteriors + 1)):(3 * n_posteriors)
+      my_lty[to_remove] <- 0
+      my_col[to_remove] <- 0
+    } else {
+      my_lty <- 1:3
+      my_col <- 1
+    }
+  } else {
+    my_lty <- 1
+    my_col <- 1:n_posteriors
+  }
+  return(list(my_lty = my_lty, my_col = my_col))
+}
+
+#' @keywords internal
+#' @rdname posteriors3-internal
+set_legend <- function(x, prior, likelihood, legend_args, n_distns,
+                       n_posteriors, digits, col, lwd, lty) {
+  # Function to create the legend text
+  create_legend_text <- function(x, n_distns) {
+    leg_text <- numeric(n_distns)
+    for (i in 1:n_distns) {
+      text_i <- lapply(x, "[[", i)
+      # Round the parameter values to digits significant digits
+      text_i <- lapply(text_i, signif, digits = digits)
+      leg_text[i] <- paste0(text_i, collapse = ", ")
+    }
+    return(leg_text)
+  }
+  if (is.null(legend_args[["legend"]])) {
+    legend_args$legend <- create_legend_text(x, n_distns)
+    if (!prior & likelihood) {
+      legend_args$legend <- c(legend_args$legend, rep("", n_posteriors - 1))
+    }
+    if (prior & likelihood) {
+      legend_args$legend <- c(legend_args$legend, rep("", n_posteriors - 1))
+    }
+  }
+  if (is.null(legend_args[["title"]])) {
+    if (prior & !likelihood) {
+      legend_args$title <- paste("posterior", "prior", sep = "        ")
+    } else if (!prior & likelihood) {
+      legend_args$title <- paste("posterior", "likelihood", sep = "        ")
+    } else if (prior & likelihood) {
+      legend_args$title <- paste("posterior", "prior", "likelihood",
+                                 sep = "        ")
+    } else {
+      legend_args$title <- NULL
+    }
+  }
+  if (is.null(legend_args[["col"]])) {
+    legend_args$col <- col
+  }
+  if (is.null(legend_args[["lwd"]])) {
+    legend_args$lwd <- lwd
+  }
+  if (is.null(legend_args[["lty"]])) {
+    legend_args$lty <- lty
+  }
+  if (is.null(legend_args[["ncol"]])) {
+    legend_args$ncol <- 1
+    if (prior) {
+      legend_args$ncol <- legend_args$ncol + 1
+    }
+    if (likelihood) {
+      legend_args$ncol <- legend_args$ncol + 1
+    }
+  }
+  return(legend_args)
 }

@@ -5,13 +5,40 @@
 \alias{check_data}
 \alias{is.wholenumber}
 \alias{plot_distribution_contours}
+\alias{set_lty_col}
+\alias{set_legend}
 \title{Internal posteriors3 functions}
 \usage{
 check_data(x)
 
 is.wholenumber(x, tol = .Machine$double.eps^0.5)
 
-plot_distribution_contours(x, prior, names, len, p, legend_args, digits, ...)
+plot_distribution_contours(
+  x,
+  prior,
+  likelihood,
+  names,
+  len,
+  p,
+  legend_args,
+  digits,
+  ...
+)
+
+set_lty_col(prior, likelihood, n_posteriors)
+
+set_legend(
+  x,
+  prior,
+  likelihood,
+  legend_args,
+  n_distns,
+  n_posteriors,
+  digits,
+  col,
+  lwd,
+  lty
+)
 }
 \description{
 Internal posteriors3 functions
