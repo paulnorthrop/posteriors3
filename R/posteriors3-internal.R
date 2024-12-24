@@ -253,6 +253,21 @@ plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
     legend_args[["lty"]] <- c(legend_args[["lty"]], rep(0, zeros))
     do.call(graphics::legend, legend_args)
   }
+  if (likelihood) {
+    likelihood_legend_pos <- switch(legend_args[["x"]],
+                                    bottomright = "bottomleft",
+                                    bottom = "bottomleft",
+                                    bottomleft = "bottomright",
+                                    left = "right",
+                                    topleft = "topright",
+                                    top = "topleft",
+                                    topright = "topleft",
+                                    right = "left",
+                                    center = "left")
+    graphics::legend(x = likelihood_legend_pos, legend = "likelihood",
+                     lty = 3, col = ifelse(n_posteriors > 1, 8, 1),
+                     lwd = lwd_vec[length(lwd_vec)])
+  }
   return(invisible())
 }
 
