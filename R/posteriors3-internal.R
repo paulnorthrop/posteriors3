@@ -174,17 +174,6 @@ plot_distribution_contours <- function(x, prior, likelihood, names, len, p,
   } else {
     my_main <- paste(my_main, "posterior p.d.f.")
   }
-  # Function to create the legend text
-  create_legend_text <- function(x, n_distns) {
-    leg_text <- numeric(n_distns)
-    for (i in 1:n_distns) {
-      text_i <- lapply(x, "[[", i)
-      # Round the parameter values to digits significant digits
-      text_i <- lapply(text_i, signif, digits = digits)
-      leg_text[i] <- paste0(text_i, collapse = ", ")
-    }
-    return(leg_text)
-  }
   # Create the contour plot of posterior and prior densities
   # Function for calculating the pdf
   pdf_fun <- function(xx, yy, distn_object) {
