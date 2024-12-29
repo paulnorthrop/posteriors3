@@ -82,10 +82,12 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
     if (!is.numeric(margin) & !is.character(margin)) {
       stop("'margin' must be numeric or character")
     }
-    if (is.numeric(margin) & !is.element(margin, 1:number_of_margins)) {
+    if (all(is.numeric(margin)) &
+        any(!is.element(margin, 1:number_of_margins))) {
       stop("'margin' must be in ", "1:", number_of_margins)
     }
-    if (is.character(margin) & !is.element(margin, marginal_variable_names)) {
+    if (all(is.character(margin)) &
+        !is.element(margin, marginal_variable_names)) {
       stop_text <- paste0(marginal_variable_names, collapse = ", ")
       stop("'margin' must be in {", stop_text, "}")
     }
