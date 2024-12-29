@@ -17,10 +17,19 @@ prior <- Beta(alpha = alpha, beta = beta)
 posterior <- likelihood * prior
 
 # posterior has extra attributes
-z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
+z <- plot(posterior, prior = TRUE,
+          lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
           cdf = TRUE)
-test_that("posterior: 1 Binomial distribution, 1 prior", {
+test_that("posterior: 1 Binomial distribution, 1 prior, don't plot prior", {
   testthat::expect_equal(attr(posterior, "prior"), z[2], ignore_attr = TRUE)
+})
+
+# Don't plot the prior
+z <- plot(posterior, prior = FALSE,
+          lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
+          cdf = TRUE)
+test_that("posterior: 1 Binomial distribution, 1 prior, don't plot prior", {
+  testthat::expect_equal(posterior, z[1], ignore_attr = TRUE)
 })
 
 ## Error triggering
