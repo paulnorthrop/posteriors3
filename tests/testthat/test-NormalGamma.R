@@ -33,10 +33,18 @@ pdf_val <- pdf(X3, matrix(c(10, 1), ncol = 2))
 manual_val <- exp(-1) / (pi * sqrt(2))
 log_pdf_val <- log_pdf(X3, matrix(c(10, 1), ncol = 2))
 test_that("NormalGamma: pdf", {
-  testthat::expect_equal(pdf_val, manual_val, ignore_attr = TRUE)
+  testthat::expect_equal(pdf_val, manual_val, ignore_attr = FALSE)
 })
 test_that("NormalGamma: log_pdf", {
-  testthat::expect_equal(log_pdf_val, log(manual_val), ignore_attr = TRUE)
+  testthat::expect_equal(log_pdf_val, log(manual_val), ignore_attr = FALSE)
+})
+pdf_val <- pdf(X3, matrix(c(10, 1), ncol = 2), drop = FALSE)
+test_that("NormalGamma: pdf, drop = FALSE", {
+  testthat::expect_equal(pdf_val, as.matrix(manual_val), ignore_attr = FALSE)
+})
+log_pdf_val <- log_pdf(X3, matrix(c(10, 1), ncol = 2), drop = FALSE)
+test_that("NormalGamma: pdf, drop = FALSE", {
+  testthat::expect_equal(log_pdf_val, as.matrix(log(manual_val)), ignore_attr = FALSE)
 })
 
 # support
@@ -60,4 +68,18 @@ test_that("NormalGamma: is_continuous, 2D", {
 })
 test_that("NormalGamma: is_discrete, 2D", {
   testthat::expect_equal(is_discrete(X2), c(FALSE, FALSE))
+})
+
+# Error/exception triggering
+test_that("NormalGamma: lambda non-positive", {
+  testthat::expect_error(NormalGamma(lambda = 0))
+})
+test_that("NormalGamma: shape non-positive", {
+  testthat::expect_error(NormalGamma(shape = -0.5))
+})
+test_that("randomNormalGamma: n = 0", {
+  testthat::expect_equal(random(X, n = 0), numeric(0L))
+})
+test_that("pdf.NormalGamma: x is a numeric vector", {
+  testthat::expect_error(pdf(X, x = 1:2))
 })
