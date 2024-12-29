@@ -62,7 +62,7 @@ test_that("posterior: 1 Binomial distribution, 2 priors, no prior, no likelihood
 })
 
 # Prior and likelihood
-z <- plot(posterior, prior = TRUE, likelihood = FALSE)
+z <- plot(posterior, prior = TRUE, likelihood = FALSE, col = c(1, 2, 1, 2))
 test_that("posterior: 1 Binomial distribution, 2 priors, prior and likelihood", {
   testthat::expect_equal(posterior, z[1:2], ignore_attr = TRUE)
 })
