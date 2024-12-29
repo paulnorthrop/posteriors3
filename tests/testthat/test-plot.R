@@ -16,6 +16,13 @@ prior <- Beta(alpha = alpha, beta = beta)
 # Construct the posterior distribution
 posterior <- likelihood * prior
 
+# posterior has extra attributes
+z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
+          cdf = TRUE)
+test_that("posterior: 1 Binomial distribution, 1 prior", {
+  testthat::expect_equal(attr(posterior, "prior"), z[2], ignore_attr = TRUE)
+})
+
 ## Error triggering
 test_that("posterior plot for Binomial: margin is not relevant", {
   testthat::expect_error(plot(posterior, margin = 1))
@@ -32,25 +39,25 @@ posterior <- likelihood * prior
 # posterior has extra attributes
 z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
           cdf = TRUE)
-test_that("posterior: 1 Binomial distribution, 1 prior", {
+test_that("posterior: 1 Binomial distribution, 2 priors", {
   testthat::expect_equal(attr(posterior, "prior"), z[3:4], ignore_attr = TRUE)
 })
 
 # No prior and plot cdf
 z <- plot(posterior, prior = FALSE, xlim = c(0, 1), ylim = c(0, 9), cdf = TRUE)
-test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
+test_that("posterior: 1 Binomial distribution, 2 priors, no prior in plot", {
   testthat::expect_equal(posterior, z[1:2], ignore_attr = TRUE)
 })
 
 # No prior, likelihood
 z <- plot(posterior, prior = FALSE, likelihood = TRUE)
-test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
+test_that("posterior: 1 Binomial distribution, 2 priors, no prior in plot", {
   testthat::expect_equal(posterior, z[1:2], ignore_attr = TRUE)
 })
 
 # No prior, no likelihood
 z <- plot(posterior, prior = FALSE, likelihood = FALSE)
-test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
+test_that("posterior: 1 Binomial distribution, 2 priors, no prior in plot", {
   testthat::expect_equal(posterior, z[1:2], ignore_attr = TRUE)
 })
 
