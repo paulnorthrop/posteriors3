@@ -17,13 +17,25 @@ prior <- Beta(alpha = alpha, beta = beta)
 posterior <- likelihood * prior
 
 # posterior has extra attributes
-z <- plot(posterior)
+z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"))
 test_that("posterior: 1 Binomial distribution, 1 prior", {
   testthat::expect_equal(attr(posterior, "prior"), z[2], ignore_attr = TRUE)
 })
 
-# posterior has extra attributes
-z <- plot(posterior, prior = FALSE)
+# No prior
+z <- plot(posterior, prior = FALSE, xlim = c(0.2, 0.8), ylim = c(0, 9))
+test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
+  testthat::expect_equal(posterior, z[1], ignore_attr = TRUE)
+})
+
+# No prior, likelihood
+z <- plot(posterior, prior = FALSE, likelihood = TRUE)
+test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
+  testthat::expect_equal(posterior, z[1], ignore_attr = TRUE)
+})
+
+# No prior, no likelihood
+z <- plot(posterior, prior = FALSE, likelihood = FALSE)
 test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
   testthat::expect_equal(posterior, z[1], ignore_attr = TRUE)
 })
@@ -41,7 +53,6 @@ likelihood <- add_data(X, data)
 # Set a Normal-Gamma prior for (mean mu, precision tau)
 prior <- NormalGamma(names = c("mu", "tau"))
 posterior <- likelihood * prior
-posterior
 
 # Plot the marginal prior and posterior distributions for mu and tau
 z <- plot(posterior, margin = "mu")
@@ -51,7 +62,8 @@ test_that("posterior: 1 Normal distribution, 1 prior", {
 })
 
 # Plot the 2D contours of the posterior and prior for (mu, tau)
-z <- plot(posterior)
+z <- plot(posterior, col = c("red", "blue"), lwd = 1, lty = 1:2,
+          xlim = c(-5, 11), ylim = c(0, 5))
 test_that("posterior contours: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
 })
@@ -59,3 +71,23 @@ test_that("prior contours: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(z[2], attr(posterior, "prior"), ignore_attr = TRUE)
 })
 
+# Repeat with likelihood in plot but no prior
+z <- plot(posterior, prior = FALSE, likelihood = TRUE)
+test_that("posterior contours: 1 Normal distribution, 1 prior", {
+  testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
+})
+
+# Repeat with likelihood in plot and with prior
+z <- plot(posterior, prior = TRUE, likelihood = TRUE)
+test_that("posterior contours: 1 Normal distribution, 1 prior", {
+  testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
+})
+test_that("prior contours: 1 Normal distribution, 1 prior", {
+  testthat::expect_equal(z[2], attr(posterior, "prior"), ignore_attr = TRUE)
+})
+
+# Repeat with no prior and no likeihood
+z <- plot(posterior, prior = FALSE, likelihood = FALSE)
+test_that("posterior contours: 1 Normal distribution, 1 prior", {
+  testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
+})
