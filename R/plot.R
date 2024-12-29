@@ -80,7 +80,7 @@ plot.posterior <- function(x, prior = TRUE, likelihood = FALSE, margin = NULL,
       stop("'margin' is not relevant for a 1-dimensional posterior")
     }
     if (!is.numeric(margin) & !is.character(margin)) {
-      stop("'margin' mus be numeric or character")
+      stop("'margin' must be numeric or character")
     }
     if (is.numeric(margin) & !is.element(margin, 1:number_of_margins)) {
       stop("'margin' must be in ", "1:", number_of_margins)
