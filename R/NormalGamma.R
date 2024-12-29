@@ -123,7 +123,7 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #' pdf(X, matrix(c(0, 0), ncol = 2))
 #' @export
 pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
-  if (!is.matrix(x) | dim(x)[2] != 2) {
+  if (!is.matrix(x) || dim(x)[2] != 2) {
     stop("'x' must be a numeric matrix with 2 columns")
   }
   y <- x[, 2]
@@ -151,7 +151,7 @@ pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
 #' @rdname pdf.NormalGamma
 #' @export
 log_pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
-  if (!is.matrix(x) | dim(x)[2] != 2) {
+  if (!is.matrix(x) || dim(x)[2] != 2) {
     stop("'x' must be a numeric matrix with 2 columns")
   }
   y <- x[, 2]
