@@ -27,8 +27,8 @@ test_that("posterior: 1 Binomial distribution, 1 prior", {
   testthat::expect_equal(attr(posterior, "prior"), z[2], ignore_attr = TRUE)
 })
 
-# No prior
-z <- plot(posterior, prior = FALSE, xlim = c(0.2, 0.8), ylim = c(0, 9))
+# No prior and plot cdf
+z <- plot(posterior, prior = FALSE, xlim = c(0, 1), ylim = c(0, 9), cdf = TRUE)
 test_that("posterior: 1 Binomial distribution, 1 prior, no prior in plot", {
   testthat::expect_equal(posterior, z[1], ignore_attr = TRUE)
 })
