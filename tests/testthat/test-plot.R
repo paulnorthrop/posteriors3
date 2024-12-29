@@ -16,6 +16,11 @@ prior <- Beta(alpha = alpha, beta = beta)
 # Construct the posterior distribution
 posterior <- likelihood * prior
 
+## Error triggering
+test_that("posterior plot for Binomial: margin is not relevant", {
+  testthat::expect_error(plot(posterior, margin = 1))
+})
+
 # posterior has extra attributes
 z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"))
 test_that("posterior: 1 Binomial distribution, 1 prior", {
@@ -91,3 +96,14 @@ z <- plot(posterior, prior = FALSE, likelihood = FALSE)
 test_that("posterior contours: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
 })
+
+## Error triggering
+test_that("posterior contour plot: margin must be numeric or character", {
+  testthat::expect_error(plot(posterior, margin = function(x) x))
+})
+
+## Error triggering
+test_that("posterior contour plot: margin too large", {
+  testthat::expect_error(plot(posterior, margin = 1:3))
+})
+
