@@ -22,7 +22,8 @@ test_that("posterior plot for Binomial: margin is not relevant", {
 })
 
 # posterior has extra attributes
-z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"))
+z <- plot(posterior, lty = 1:2, lwd = c(2, 2), col = c("purple", "orange"),
+          cdf = TRUE)
 test_that("posterior: 1 Binomial distribution, 1 prior", {
   testthat::expect_equal(attr(posterior, "prior"), z[2], ignore_attr = TRUE)
 })
