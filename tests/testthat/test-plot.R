@@ -109,9 +109,10 @@ test_that("posterior contours: 1 Normal distribution, 1 prior", {
 test_that("posterior contour plot: margin must be numeric or character", {
   testthat::expect_error(plot(posterior, margin = function(x) x))
 })
-
-## Error triggering
 test_that("posterior contour plot: margin too large", {
   testthat::expect_error(plot(posterior, margin = 1:3))
 })
-
+# Wrong name of marginal
+test_that("posterior contour plot: margin with incorrect name", {
+  testthat::expect_error(plot(posterior, margin = "wrong_name"))
+})
