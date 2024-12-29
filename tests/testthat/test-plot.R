@@ -66,6 +66,13 @@ test_that("posterior: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(margins[[1]], z[1], ignore_attr = TRUE)
 })
 
+# Same, with numeric margin
+z <- plot(posterior, margin = 1)
+margins <- marginals(posterior)
+test_that("posterior: 1 Normal distribution, 1 prior", {
+  testthat::expect_equal(margins[[1]], z[1], ignore_attr = TRUE)
+})
+
 # Plot the 2D contours of the posterior and prior for (mu, tau)
 z <- plot(posterior, col = c("red", "blue"), lwd = 1, lty = 1:2,
           xlim = c(-5, 11), ylim = c(0, 5))
