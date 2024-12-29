@@ -85,13 +85,13 @@ test_that("prior contours: 1 Normal distribution, 1 prior", {
 })
 
 # Repeat with likelihood in plot but no prior
-z <- plot(posterior, prior = FALSE, likelihood = TRUE)
+z <- plot(posterior, prior = FALSE, likelihood = TRUE, col = 1:2)
 test_that("posterior contours: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
 })
 
 # Repeat with likelihood in plot and with prior
-z <- plot(posterior, prior = TRUE, likelihood = TRUE)
+z <- plot(posterior, prior = TRUE, likelihood = TRUE, col = 1:3)
 test_that("posterior contours: 1 Normal distribution, 1 prior", {
   testthat::expect_equal(z[1], posterior, ignore_attr = TRUE)
 })
