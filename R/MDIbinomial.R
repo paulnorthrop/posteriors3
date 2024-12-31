@@ -55,6 +55,7 @@ MDIbinomial <- function(alpha = 1, beta = 1) {
 #'   done element by element (\code{elementwise = TRUE}, yielding a vector)? The
 #'   default of \code{NULL} means that \code{elementwise = TRUE} is used if the
 #'   lengths match and otherwise \code{elementwise = FALSE} is used.
+#' @param ... Not used.
 #'
 #' @return In case of a single distribution object, either a numeric
 #'   vector of length `probs` (if `drop = TRUE`, default) or a `matrix` with
@@ -63,7 +64,7 @@ MDIbinomial <- function(alpha = 1, beta = 1) {
 #'   possible combinations.
 #' @export
 #'
-pdf.MDIbinomial <- function(d, x, drop = TRUE, elementwise = NULL) {
+pdf.MDIbinomial <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
   if (is.logical(elementwise) && elementwise && length(d) != length(x)) {
     warning("''elementwise'' has been set to FALSE because length(d) != length(x)")
     elementwise <- FALSE
@@ -143,11 +144,11 @@ support.MDIbinomial <- function(d, drop = TRUE, ...) {
 #' @exportS3Method
 is_discrete.MDIbinomial <- function(d, ...) {
   rlang::check_dots_used()
-  return(setNames(rep.int(FALSE, length(d)), names(d)))
+  return(stats::setNames(rep.int(FALSE, length(d)), names(d)))
 }
 
 #' @exportS3Method
 is_continuous.MDIbinomial <- function(d, ...) {
   rlang::check_dots_used()
-  return(setNames(rep.int(TRUE, length(d)), names(d)))
+  return(stats::setNames(rep.int(TRUE, length(d)), names(d)))
 }

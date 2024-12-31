@@ -6,7 +6,7 @@
 \title{Evaluate the probability density function of an MDI prior distribution for a
 binomial probability}
 \usage{
-\method{pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL)
+\method{pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL, ...)
 
 \method{log_pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL)
 }
@@ -24,6 +24,8 @@ Or, if \code{d} and \code{x} have the same length, should the evaluation be
 done element by element (\code{elementwise = TRUE}, yielding a vector)? The
 default of \code{NULL} means that \code{elementwise = TRUE} is used if the
 lengths match and otherwise \code{elementwise = FALSE} is used.}
+
+\item{...}{Not used.}
 }
 \value{
 In case of a single distribution object, either a numeric
