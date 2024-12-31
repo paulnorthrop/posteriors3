@@ -5,9 +5,9 @@
 \alias{log_pdf.NormalGamma}
 \title{Evaluate the joint probability density function of a Normal-Gamma distribution}
 \usage{
-\method{pdf}{NormalGamma}(d, x, drop = TRUE, ...)
+\method{pdf}{NormalGamma}(d, x, drop = TRUE)
 
-\method{log_pdf}{NormalGamma}(d, x, drop = TRUE, ...)
+\method{log_pdf}{NormalGamma}(d, x, drop = TRUE)
 }
 \arguments{
 \item{d}{A \code{NormalGamma} object created by a call to \code{\link[=NormalGamma]{NormalGamma()}}.}
@@ -19,8 +19,6 @@ the \eqn{X \mid Y} component and column 2 the corresponding values of the
 precision \eqn{\lambda Y} and \eqn{Y} has a Gamma distribution.}
 
 \item{drop}{logical. Should the result be simplified to a vector if possible?}
-
-\item{...}{Not used.}
 }
 \value{
 If \code{d} is a single distribution object, either a numeric

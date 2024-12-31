@@ -109,7 +109,6 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #'   \eqn{X \mid Y} has a Normal distribution with mean \eqn{\mu} and
 #'   precision \eqn{\lambda Y} and \eqn{Y} has a Gamma distribution.
 #' @param drop logical. Should the result be simplified to a vector if possible?
-#' @param ... Not used.
 #'
 #' @return If `d` is a single distribution object, either a numeric
 #'   vector of length `max(length(x), length(y))` (if `drop = TRUE`, default)
@@ -122,7 +121,7 @@ random.NormalGamma <- function(x, n = 1L, drop = TRUE, ...) {
 #' X <- NormalGamma()
 #' pdf(X, matrix(c(0, 0), ncol = 2))
 #' @export
-pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+pdf.NormalGamma <- function(d, x, drop = TRUE) {
   if (!is.matrix(x) || dim(x)[2] != 2) {
     stop("'x' must be a numeric matrix with 2 columns")
   }
@@ -150,7 +149,7 @@ pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
 
 #' @rdname pdf.NormalGamma
 #' @export
-log_pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
+log_pdf.NormalGamma <- function(d, x, drop = TRUE) {
   if (!is.matrix(x) || dim(x)[2] != 2) {
     stop("'x' must be a numeric matrix with 2 columns")
   }
