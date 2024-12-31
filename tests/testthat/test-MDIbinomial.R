@@ -13,7 +13,7 @@ const12 <- 0.493598989279
 # Note: the alpha = beta = 0 case is U(0, 1)
 
 # P1 (1 distribution) pdf and log_pdf
-x_val <- c(0, 0.5, 1)
+x_vals <- c(0, 0.5, 1)
 pdf_val <- pdf(P1, x_vals)
 manual_val <- const1 * c(1, 1 / 2 , 1)
 test_that("MDIbinomial(1, 1): pdf", {
