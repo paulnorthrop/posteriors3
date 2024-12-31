@@ -7,7 +7,7 @@
 \usage{
 \method{pdf}{NormalGamma}(d, x, drop = TRUE, ...)
 
-\method{log_pdf}{NormalGamma}(d, x, drop = TRUE)
+\method{log_pdf}{NormalGamma}(d, x, drop = TRUE, ...)
 }
 \arguments{
 \item{d}{A \code{NormalGamma} object created by a call to \code{\link[=NormalGamma]{NormalGamma()}}.}

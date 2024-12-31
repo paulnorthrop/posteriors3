@@ -117,7 +117,7 @@ pdf.MDIbinomial <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
 
 #' @rdname pdf.MDIbinomial
 #' @export
-log_pdf.MDIbinomial <- function(d, x, drop = TRUE, elementwise = NULL) {
+log_pdf.MDIbinomial <- function(d, x, drop = TRUE, elementwise = NULL, ...) {
   # Call pdf.MDIbinomial
   return(log(pdf(d = d, x = x, drop = drop, elementwise = elementwise)))
 }

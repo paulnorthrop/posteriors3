@@ -150,7 +150,7 @@ pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
 
 #' @rdname pdf.NormalGamma
 #' @export
-log_pdf.NormalGamma <- function(d, x, drop = TRUE) {
+log_pdf.NormalGamma <- function(d, x, drop = TRUE, ...) {
   if (!is.matrix(x) || dim(x)[2] != 2) {
     stop("'x' must be a numeric matrix with 2 columns")
   }

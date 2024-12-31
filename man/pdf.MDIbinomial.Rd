@@ -8,7 +8,7 @@ binomial probability}
 \usage{
 \method{pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL, ...)
 
-\method{log_pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL)
+\method{log_pdf}{MDIbinomial}(d, x, drop = TRUE, elementwise = NULL, ...)
 }
 \arguments{
 \item{d}{An \code{MDIbinomial} object created by a call to \code{\link[=MDIbinomial]{MDIbinomial()}}.}
