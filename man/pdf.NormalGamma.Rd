@@ -16,7 +16,7 @@
 the \eqn{X \mid Y} component and column 2 the corresponding values of the
 \eqn{Y} components of the joint distribution of \eqn{(X, Y)}, where
 \eqn{X \mid Y} has a Normal distribution with mean \eqn{\mu} and
-precision \eqn{\lambda Y} and has a Gamma distribution.}
+precision \eqn{\lambda Y} and \eqn{Y} has a Gamma distribution.}
 
 \item{drop}{logical. Should the result be simplified to a vector if possible?}
 
