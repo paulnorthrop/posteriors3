@@ -12,6 +12,8 @@
 #'   attribute `"data"`, added using [`add_data()`].
 #' @param y To specify a **prior** distribution. A probability distribution
 #'   object inheriting from class `"distribution"`.
+#' @param ... Further arguments to be passed to [`ru()`][rust::ru()]. See
+#'   **Details**.
 #'
 #' @details If `x` has an attribute `"data"`, added using [`add_data()`], then
 #'   `x` is used to define a likelihood based on treating `attr(x, "data")` as
@@ -23,16 +25,42 @@
 #'   same output.
 #'
 #'   A message will note likelihood and prior combination used to create the
-#'   posterior distribution. Such messages can be suppressed using
+#'   posterior distribution. These messages can be suppressed using
 #'   [`suppressMessages()`][message()] if desired.
 #'
-#'   **Explain conjugacy and give an example (Binomial-Beta?).
-#'   If prior is conjugate then ... distribution object: same distribution type
-#'   as the prior distribution in `y`.
-#'   If not then ... sample from posterior.**
+#'   **Conjugate priors**. For some likelihoods, it is possible to specify a
+#'   family of prior distribution such that the posterior distribution is in
+#'   the same family. For example, for a likelihood based on a random sample
+#'   from a [`Binomial()`][distributions3::Binomial()] distribution, specifying
+#'   a [`Beta()`][distributions3::Beta()] prior distribution for the
+#'   probability parameter \eqn{p} results in a Beta posterior distribution.
+#'   In cases like this, `posterior()` returns a distribution object with the
+#'   same distribution type as the distribution object `y` used to specify
+#'   the prior distribution. See the table of conjugate distributions in the
+#'   wikipedia article
+#'   [Conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)
+#'   for details and examples of other conjugate cases.
 #'
-#' @returns A probability distribution object from the same family as the prior
-#'   distribution used.
+#'   **Non-conjugate priors**. If `y` is not a conjugate prior distribution for
+#'   the likelihood `x`, then [`ru()`][rust::ru()] is used to simulate from the
+#'   posterior distribution. In this event `...` may be used in a call to
+#'   `posterior(x, y, ...)` to pass arguments to [`ru()`][rust::ru()]. The
+#'   argument `n` may be useful because it specifies the size of the posterior
+#'   sample. The default set in the `posterior` methods supplied in
+#'   `posteriors3` is `n = 1000`. Other arguments to [`ru()`][rust::ru()] have
+#'   default settings designed to work well in specific examples. For example,
+#'   in [`posterior.Binomial()`][posterior()] sampling from the posterior for
+#'   the probability parameter \eqn{p} is conducted on a logit scale, that is,
+#'   we sample from the posterior distribution for \eqn{\log(p / (1-p))}.
+#'   See **Examples** for an example based on the (non-conjugate) Maximal Data
+#'   Information prior [`MDIbinomial()`].
+#'
+#' @returns In conjugate cases, a probability distribution object from the same
+#'   family as the prior distribution. The first component of the class of this
+#'   object is the name of the prior (and posterior) distribution.
+#'
+#'   In non-conjugate cases, an object, of class `c("ru", "posterior")`,
+#'   returned from [`ru()`][rust::ru()].
 #'
 #' @seealso [`add_data()`] for adding data to a `"distribution"` object.
 #' @seealso [`plot.posterior()`] for plotting posterior and prior distributions.
@@ -66,6 +94,11 @@
 #' # Determine the posterior distribution
 #' posterior <- likelihood * prior
 #' posterior
+#' plot(posterior)
+#'
+#' # Non-conjugate MDI prior
+#' prior <- MDIbinomial()
+#' posterior <- likelihood * prior
 #' plot(posterior)
 #'
 #' ## Two Binomial distributions, with sizes 5 and 10
@@ -148,6 +181,6 @@ NULL
 #' @rdname posterior
 #' @order 2
 #' @export
-posterior <- function(x, y) {
+posterior <- function(x, y, ...) {
   UseMethod("posterior")
 }

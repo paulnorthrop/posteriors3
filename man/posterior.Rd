@@ -9,9 +9,9 @@
 \usage{
 \method{*}{distribution}(x, y)
 
-posterior(x, y)
+posterior(x, y, ...)
 
-\method{posterior}{Binomial}(x, y)
+\method{posterior}{Binomial}(x, y, ...)
 
 \method{posterior}{Normal}(x, y)
 }
@@ -24,10 +24,17 @@ attribute \code{"data"}, added using \code{\link[=add_data]{add_data()}}.}
 
 \item{y}{To specify a \strong{prior} distribution. A probability distribution
 object inheriting from class \code{"distribution"}.}
+
+\item{...}{Further arguments to be passed to \code{\link[rust:ru]{ru()}}. See
+\strong{Details}.}
 }
 \value{
-A probability distribution object from the same family as the prior
-distribution used.
+In conjugate cases, a probability distribution object from the same
+family as the prior distribution. The first component of the class of this
+object is the name of the prior (and posterior) distribution.
+
+In non-conjugate cases, an object, of class \code{c("ru", "posterior")},
+returned from \code{\link[rust:ru]{ru()}}.
 }
 \description{
 Generic functions for performing univariate Bayesian inference using
@@ -46,13 +53,35 @@ the prior distribution supplied by \code{y}. \code{posterior(x, y)} will give th
 same output.
 
 A message will note likelihood and prior combination used to create the
-posterior distribution. Such messages can be suppressed using
+posterior distribution. These messages can be suppressed using
 \code{\link[=message]{suppressMessages()}} if desired.
 
-\strong{Explain conjugacy and give an example (Binomial-Beta?).
-If prior is conjugate then ... distribution object: same distribution type
-as the prior distribution in \code{y}.
-If not then ... sample from posterior.}
+\strong{Conjugate priors}. For some likelihoods, it is possible to specify a
+family of prior distribution such that the posterior distribution is in
+the same family. For example, for a likelihood based on a random sample
+from a \code{\link[distributions3:Binomial]{Binomial()}} distribution, specifying
+a \code{\link[distributions3:Beta]{Beta()}} prior distribution for the
+probability parameter \eqn{p} results in a Beta posterior distribution.
+In cases like this, \code{posterior()} returns a distribution object with the
+same distribution type as the distribution object \code{y} used to specify
+the prior distribution. See the table of conjugate distributions in the
+wikipedia article
+\href{https://en.wikipedia.org/wiki/Conjugate_prior}{Conjugate prior}
+for details and examples of other conjugate cases.
+
+\strong{Non-conjugate priors}. If \code{y} is not a conjugate prior distribution for
+the likelihood \code{x}, then \code{\link[rust:ru]{ru()}} is used to simulate from the
+posterior distribution. In this event \code{...} may be used in a call to
+\code{posterior(x, y, ...)} to pass arguments to \code{\link[rust:ru]{ru()}}. The
+argument \code{n} may be useful because it specifies the size of the posterior
+sample. The default set in the \code{posterior} methods supplied in
+\code{posteriors3} is \code{n = 1000}. Other arguments to \code{\link[rust:ru]{ru()}} have
+default settings designed to work well in specific examples. For example,
+in \code{\link[=posterior]{posterior.Binomial()}} sampling from the posterior for
+the probability parameter \eqn{p} is conducted on a logit scale, that is,
+we sample from the posterior distribution for \eqn{\log(p / (1-p))}.
+See \strong{Examples} for an example based on the (non-conjugate) Maximal Data
+Information prior \code{\link[=MDIbinomial]{MDIbinomial()}}.
 }
 \examples{
 library(distributions3)
@@ -83,6 +112,11 @@ prior <- Beta(alpha = c(1, 10), beta = c(1, 10))
 # Determine the posterior distribution
 posterior <- likelihood * prior
 posterior
+plot(posterior)
+
+# Non-conjugate MDI prior
+prior <- MDIbinomial()
+posterior <- likelihood * prior
 plot(posterior)
 
 ## Two Binomial distributions, with sizes 5 and 10
