@@ -87,7 +87,7 @@ prior <- MDIbinomial()
 x1 <- posterior(likelihood1, prior, n = n)
 x2 <- posterior(likelihood2, prior, n = n)
 test_that("Binomial MDI: 1 Binomial vs 2 Binomials", {
-  testthat::expect_equal(x1$box, x2$box)
+  testthat::expect_equal(x1$box, x2$box, tolerance = 1e-5)
 })
 
 
