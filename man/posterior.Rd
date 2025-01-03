@@ -13,7 +13,7 @@ posterior(x, y, ...)
 
 \method{posterior}{Binomial}(x, y, ...)
 
-\method{posterior}{Normal}(x, y)
+\method{posterior}{Normal}(x, y, ...)
 }
 \arguments{
 \item{x}{To specify a \strong{likelihood}. A probability distribution object
