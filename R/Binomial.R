@@ -40,7 +40,7 @@ posterior.Binomial <- function(x, y, ...) {
       # Create a Binomial distribution object
       d <- distributions3::Binomial(size = size, p = prob)
       log_lik <- log_likelihood(d = d, x = unlist(data))
-      log_prior <- log_pdf(prior, x = prob)
+      log_prior <- log_pdf(y, x = prob)
       return(log_lik + log_prior)
     }
     # Has the user provided arguments in ... to be passed to rust::ru()?
