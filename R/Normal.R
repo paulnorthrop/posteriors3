@@ -1,6 +1,6 @@
 #' @export
 #' @rdname posterior
-posterior.Normal <- function(x, y) {
+posterior.Normal <- function(x, y, ...) {
   # Extract the name of the prior distribution
   prior_distribution <- class(y)[1]
   # If the prior is a conjugate Normal-Gamma prior for (mu, tau), where mu is
