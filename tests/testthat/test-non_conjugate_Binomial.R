@@ -20,9 +20,10 @@ set.seed(3012025)
 n <- 2
 
 # Tests
-x <- posterior(likelihood, prior, n = n)
+# Just one call with the default n = 1000
+x <- posterior(likelihood, prior)
 test_that("Binomial MDI: trans is logit", {
-  testthat::expect_equal(dim(x$sim_vals), c(n, 1))
+  testthat::expect_equal(dim(x$sim_vals), c(1000, 1))
 })
 x <- posterior(likelihood, prior, n = n, trans = "BC")
 test_that("Binomial MDI: trans is Box-Cox", {
