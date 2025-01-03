@@ -66,3 +66,28 @@ test_that("Binomial MDI: data are all equal to size, trans is logit", {
 #test_that("Binomial MDI: data are all equal to size, trans is BC", {
 #  testthat::expect_equal(dim(x$sim_vals), c(n, 1))
 #})
+
+## Two Binomial distributions, with sizes 5 and 10, non-conjugate case
+
+# Note: the value of p is only use to simulate example data
+M1 <- Binomial(size = 5, p = 0.8)
+M2 <- Binomial(size = c(5, 5), p = 0.8)
+set.seed(3)
+data <- random(M, 3)
+likelihood2 <- add_data(M2, data)
+data_vec <- unlist(attr(likelihood2, "data"))
+likelihood1 <- add_data(M1, data_vec)
+prior <- MDIbinomial()
+
+# Check that we get the same results from posterior() if we pass
+# (1) 1 Binomial(5, ?) distribution
+# (2) 2 Binomial(5, ?) distributions
+# using the same data
+
+x1 <- posterior(likelihood1, prior, n = n)
+x2 <- posterior(likelihood2, prior, n = n)
+test_that("Binomial MDI: 1 Binomial vs 2 Binomials", {
+  testthat::expect_equal(x1$box, x2$box)
+})
+
+
