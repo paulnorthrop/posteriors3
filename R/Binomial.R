@@ -37,15 +37,18 @@ posterior.Binomial <- function(x, y, ...) {
       if (any(prob < 0) || any(prob > 1)) {
         return(-Inf)
       }
-      # Create a Binomial distribution object
-      d <- distributions3::Binomial(size = size, p = prob)
       # A function to sum the contributions from the Binomial distributions
       # involved. There could be Binomial distributions with different values
       # of the parameter size
+      # We need to create a distribution object d_i inside binomial_loglik()
+      # because log_posterior_fn() must be vectorised with respect to prob
+      # for possible use by rust::find_lambda_one_d()
       binomial_loglik <- function(i) {
-        log_likelihood(d = d[i], x = unlist(data[i]))
+        # Create a Binomial distribution object
+        d_i <- distributions3::Binomial(size = size[i], p = prob)
+        log_likelihood(d_i, x = unlist(data[i]))
       }
-      log_lik <- sapply(X = 1:length(d), FUN = binomial_loglik)
+      log_lik <- sum(sapply(X = 1:length(size), FUN = binomial_loglik))
       log_prior <- log_pdf(y, x = prob)
       return(log_lik + log_prior)
     }
