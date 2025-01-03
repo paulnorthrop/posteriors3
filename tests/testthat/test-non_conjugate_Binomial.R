@@ -73,7 +73,7 @@ test_that("Binomial MDI: data are all equal to size, trans is logit", {
 M1 <- Binomial(size = 5, p = 0.8)
 M2 <- Binomial(size = c(5, 5), p = 0.8)
 set.seed(3)
-data <- random(M, 3)
+data <- random(M2, 3)
 likelihood2 <- add_data(M2, data)
 data_vec <- unlist(attr(likelihood2, "data"))
 likelihood1 <- add_data(M1, data_vec)
