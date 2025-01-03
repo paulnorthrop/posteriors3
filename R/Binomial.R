@@ -25,7 +25,7 @@ posterior.Binomial <- function(x, y, ...) {
     class(z) <- c(class(z)[1], "posterior", class(z)[2])
   } else {
     # Find the mle to use as an initial estimate
-    mle <- sum_data / (size * length(unlist(data)))
+    mle <- sum_data / (sum_data + sum_size_minus_data)
     # Avoid numerical problems in the cases where the mle is 0 or 1
     if (mle == 0) {
       mle <- 0.01
@@ -39,7 +39,13 @@ posterior.Binomial <- function(x, y, ...) {
       }
       # Create a Binomial distribution object
       d <- distributions3::Binomial(size = size, p = prob)
-      log_lik <- log_likelihood(d = d, x = unlist(data))
+      # A function to sum the contributions from the Binomial distributions
+      # involved. There could be Binomial distributions with different values
+      # of the parameter size
+      binomial_loglik <- function(i) {
+        log_likelihood(d = d[i], x = unlist(data[i]))
+      }
+      log_lik <- sapply(X = 1:length(d), FUN = binomial_loglik)
       log_prior <- log_pdf(y, x = prob)
       return(log_lik + log_prior)
     }
