@@ -53,7 +53,7 @@
 #'   the probability parameter \eqn{p} is conducted on a logit scale, that is,
 #'   we sample from the posterior distribution for \eqn{\log(p / (1-p))}.
 #'   See **Examples** for an example based on the (non-conjugate) Maximal Data
-#'   Information prior [`MDIbinomial()`].
+#'   Information (MDI) prior [`MDIbinomial()`].
 #'
 #' @returns In conjugate cases, a probability distribution object from the same
 #'   family as the prior distribution. The first component of the class of this
@@ -96,7 +96,7 @@
 #' posterior
 #' plot(posterior)
 #'
-#' # Non-conjugate MDI prior
+#' # Non-conjugate MDI prior, simulation from the posterior
 #' prior <- MDIbinomial()
 #' posterior <- likelihood * prior
 #' plot(posterior)

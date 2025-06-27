@@ -81,7 +81,7 @@ in \code{\link[=posterior]{posterior.Binomial()}} sampling from the posterior fo
 the probability parameter \eqn{p} is conducted on a logit scale, that is,
 we sample from the posterior distribution for \eqn{\log(p / (1-p))}.
 See \strong{Examples} for an example based on the (non-conjugate) Maximal Data
-Information prior \code{\link[=MDIbinomial]{MDIbinomial()}}.
+Information (MDI) prior \code{\link[=MDIbinomial]{MDIbinomial()}}.
 }
 \examples{
 library(distributions3)
@@ -114,7 +114,7 @@ posterior <- likelihood * prior
 posterior
 plot(posterior)
 
-# Non-conjugate MDI prior
+# Non-conjugate MDI prior, simulation from the posterior
 prior <- MDIbinomial()
 posterior <- likelihood * prior
 plot(posterior)
