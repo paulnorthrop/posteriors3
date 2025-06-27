@@ -49,12 +49,12 @@ MDIbinomial <- function(alpha = 1, beta = 1) {
 #' @param x A vector of elements whose probabilities you would like to
 #'   determine given the distribution `d`.
 #' @param drop logical. Should the result be simplified to a vector if possible?
-#' @param elementwise logical. Should each distribution in \code{d} be evaluated
-#'   at all elements of \code{x} (\code{elementwise = FALSE}, yielding a matrix)?
-#'   Or, if \code{d} and \code{x} have the same length, should the evaluation be
-#'   done element by element (\code{elementwise = TRUE}, yielding a vector)? The
-#'   default of \code{NULL} means that \code{elementwise = TRUE} is used if the
-#'   lengths match and otherwise \code{elementwise = FALSE} is used.
+#' @param elementwise logical. Should each distribution in `d` be evaluated
+#'   at all elements of `x` (`elementwise = FALSE`, yielding a matrix)?
+#'   Or, if `d` and `x` have the same length, should the evaluation be
+#'   done element by element (`elementwise = TRUE`, yielding a vector)? The
+#'   default of `NULL` means that `elementwise = TRUE` is used if the
+#'   lengths match and otherwise `elementwise = FALSE` is used.
 #' @param ... Not used.
 #'
 #' @return In case of a single distribution object, either a numeric
