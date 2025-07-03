@@ -21,10 +21,11 @@ probability distribution objects provided by the
 [distributions3](https://cran.r-project.org/package=distributions3)
 package. A multiplication generic function is provided so that a
 posterior distribution object can be created from a product of a
-likelihood object and a prior distribution object. If a conjugate prior
-is used then the posterior distribution object is also an S3 probability
-distribution object, with a distribution of the same type as the prior
-object.
+likelihood object and a prior distribution object. Therefore, the code
+mimics the mathematics that students encounter when learning about
+Bayesian inference. If a conjugate prior is used then the posterior
+distribution object is also an S3 probability distribution object, with
+a distribution of the same type as the prior object.
 
 ## An example
 
@@ -63,8 +64,7 @@ prior
 posterior <- likelihood * prior
 #> Posterior: Binomial likelihood, Beta prior
 posterior
-#>                                p 
-#> "Beta(alpha = 5.5, beta = 45.5)"
+#> [1] "Beta(alpha = 5.5, beta = 45.5)"
 ```
 
 This agrees with the result that the posterior is a Beta distribution
