@@ -9,11 +9,12 @@ Description: Provides functions to perform univariate Bayesian analyses using
     package <doi:10.32614/CRAN.package.distributions3>. A multiplication 
     generic function is provided so that a posterior distribution object can be 
     created from a product of a likelihood object and a prior distribution 
-    object. If a conjugate prior is used then the posterior distribution object
-    is also an S3 probability distribution object. If the prior is 
-    non-conjugate then the 'rust' package <doi:10.32614/CRAN.package.rust> is
-    used to simulate from the posterior distribution. Example cases binomial
-    and normal likelihoods are provided.
+    object. Therefore, the code mimics the mathematics that students encounter 
+    when learning about Bayesian inference. If a conjugate prior is used then 
+    the posterior distribution object is also an S3 probability distribution 
+    object. If the prior is non-conjugate then the 'rust' package 
+    <doi:10.32614/CRAN.package.rust> is used to simulate from the posterior 
+    distribution. Example cases binomial and normal likelihoods are provided.
 Imports: distributions3,
     graphics,
     rlang,
