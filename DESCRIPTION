@@ -19,7 +19,8 @@ Imports: distributions3,
     graphics,
     rlang,
     rust,
-    stats
+    stats,
+    utils
 License: GPL (>= 3)
 Encoding: UTF-8
 Depends:
