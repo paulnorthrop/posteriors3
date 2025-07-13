@@ -11,7 +11,11 @@
 #'   [`Binomial()`][distributions3::Binomial()] etc. `x` must have an extra
 #'   attribute `"data"`, added using [`add_data()`].
 #' @param y To specify a **prior** distribution. A probability distribution
-#'   object inheriting from class `"distribution"`.
+#'   object inheriting from class `"distribution"`. If the prior distribution
+#'   is conjugate for the distribution specified in `x` then more than one
+#'   prior may be contained in `y`, that is, `length(y)` my be greater than 1.
+#'   Otherwise, only one prior is allowed, that is, we must have
+#'   `length(y) = 1`.
 #' @param ... Further arguments to be passed to [`ru()`][rust::ru()]. See
 #'   **Details**.
 #'
@@ -172,8 +176,15 @@ NULL
   }
   # Check that the likelihood object x has appropriate "data" as an attribute
   check_data(x)
+  # Check that there is an S3 posterior method for class class(x)[1]
+  has_posterior_method <- utils::getS3method("posterior", class(x)[1])
   # If it has then call the relevant S3 posterior() method based on class(x)[1]
-  z <- posterior(x, y)
+  # Otherwise, call posterior_rou()
+  if (!is.null(has_posterior_method)) {
+    z <- posterior(x, y)
+  } else {
+    z <- posterior_rou(x, y)
+  }
   message("Posterior: ", class(x)[1], " likelihood, ", class(y)[1], " prior ")
   return(z)
 }
@@ -183,4 +194,11 @@ NULL
 #' @export
 posterior <- function(x, y, ...) {
   UseMethod("posterior")
+}
+
+#' @rdname posterior
+#' @order 3
+#' @export
+posterior_rou <- function(x, y, ...) {
+  return(x)
 }
