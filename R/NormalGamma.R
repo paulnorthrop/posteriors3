@@ -193,6 +193,11 @@ support.NormalGamma <- function(d, drop = TRUE, ...) {
   rval <- matrix(c(-Inf, Inf), nrow = length(d), ncol = 4, byrow = TRUE)
   colnames(rval) <- paste(c("min", "max", "min", "max"),
                            rep(attr(d, "variable_names"), each = 2), sep = "_")
+  if (drop) {
+    the_names <- colnames(rval)
+    rval <- c(rval)
+    names(rval) <- the_names
+  }
   return(rval)
 }
 
