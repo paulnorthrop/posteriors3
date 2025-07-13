@@ -24,6 +24,10 @@ posterior.Binomial <- function(x, y, ...) {
     # Add "posterior" as the second component of the class
     class(z) <- c(class(z)[1], "posterior", class(z)[2])
   } else {
+    # Check that there is only one prior distribution
+    if (length(y) != 1) {
+      stop("In a non-conjugate case only one prior distribution is allowed")
+    }
     # Find the mle to use as an initial estimate
     mle <- sum_data / (sum_data + sum_size_minus_data)
     # Avoid numerical problems in the cases where the mle is 0 or 1
